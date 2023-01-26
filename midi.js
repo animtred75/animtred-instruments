@@ -1,11 +1,11 @@
 /*
-Midi Sound Engine
+Midi Sound Engine v2.0.4
 
 my custom sound engine
 
 https://scratch.mit.edu/projects/718048299/
 
-2022/12/18 Anim Tred
+2023/1/25 Anim Tred
 */
 
 var MidSE = (function(){
@@ -79,7 +79,7 @@ var MidSE = (function(){
 		"melodic tom": { releaseTime: 0.25, releasePatch: 60 },
 		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: 0.85 },
 		"trumpet": { volume: [[48, 0.8], [60, 0.7], [72, 0.6]], loop: true },
-		"trumbone": { volume: 0.48, loop: true },
+		"trumbone": { volume: 0.53, loop: true },
 		"taiko drum": { releaseTime: 0.25, releasePatch: 62, volume: 0.8 },
 		"reverse cymbal": {},
 		"gumshot": {},
@@ -149,7 +149,7 @@ var MidSE = (function(){
 			file: "1a281eba5780f4db5f27f2c14eb17f7f.wav"
 		},
 		"cowbell": {
-			title: "_",
+			title: "Chicken Little",
 			file: "1760020eb37fe3709c40f60d2a8ef544.wav"
 		},
 		"triangle": {
@@ -346,7 +346,7 @@ var MidSE = (function(){
 			file: "33090cbd8df0f949151239545a9a03a2.wav"
 		},
 		"trumbone": {
-			title: "___",
+			title: "My Little Pony: friendship is magic | Swarm of the Century | FULL EPISODE | MLP",
 			file: "08dc1297b19bd5cb42e27816513e994b.wav"
 		},
 		"taiko drum": {
