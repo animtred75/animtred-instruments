@@ -1,11 +1,11 @@
 /*
-Midi Sound Engine v2.0.4
+Midi Sound Engine v2.0.6
 
 my custom sound engine
 
 https://scratch.mit.edu/projects/718048299/
 
-2023/1/25 Anim Tred
+2023/1/26 Anim Tred
 */
 
 var MidSE = (function(){
@@ -24,11 +24,11 @@ var MidSE = (function(){
 		"hi mid tom": {},
 		"high tom": {},
 		"tambourine": { volume: 0.35 },
-		"hand": {},
-		"claves": { volume: 0.56 },
+		"hand": { volume: 0.8 },
+		"claves": { volume: 0.51 },
 		"wood": { volume: 0.9 },
 		"cowbell": { volume: 0.7 },
-		"triangle": {},
+		"triangle": { volume: 0.9 },
 		"bongo": {},
 		"cabasa": {},
 		"long guiro": {},
@@ -52,37 +52,37 @@ var MidSE = (function(){
 		"piano": { releaseTime: 0.5, volume: [[36, 0.8], [48, 0.65], [60, 0.4], [72, 0.3]] },
 		"electric piano": { releaseTime: 0.5, volume: 0.7 },
 		"organ": { releaseTime: 0.5, volume: 0.72, releasePatch: 52 },
-		"guitar": { releaseTime: 0.5, volume: 0.66 },
-		"electric guitar": { releaseTime: 0.5, releasePatch: 60, volume: 0.6 },
+		"guitar": { releaseTime: 0.5, volume: 0.57 },
+		"electric guitar": { releaseTime: 0.5, releasePatch: 60, volume: 0.5 },
 		"bass": { releaseTime: 0.25, volume: [[36, 0.75], [48, 0.65]] },
 		"pizzicato": { releaseTime: 0.25, volume: [[48, 0.55], [60, 0.45]], releasePatch: 47 },
 		"harmonica": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.5 },
-		"clarinet": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.7 },
+		"clarinet": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
 		"saxophone": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6, releasePatch: 59.75 },
-		"violin": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.7 },
-		"violin_2": { releaseTime: 0.5, loop: true, loopStart: 2, loopEnd: 25, volume: 0.7 },
-		"overdriven guitar": { releasePatch: 61, loop: true, loopStart: 2, loopEnd: 4, volume: [[48, 1], [60, 0.8]] },
-		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.4]] },
+		"violin": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.62 },
+		"violin_2": { releaseTime: 0.5, loop: true, loopStart: 2, loopEnd: 25, volume: 0.62 },
+		"overdriven guitar": { releasePatch: 61, loop: true, loopStart: 2, loopEnd: 4, volume: 0.67 },
+		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.5]] },
 		"wooden flute": { releasePatch: 58, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.8], [72, 0.7]]},
 		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.65], [48, 0.55], [60, 0.4]] },
-		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.7 },
-		"vibraphone": { releaseTime: 0.25, releasePatch: 58, volume: [[60, 0.6], [72, 0.5]] },
-		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.56 },
-		"steel drum": { releaseTime: 0.25, releasePatch: 57.5, volume: 0.6 },
+		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.61 },
+		"vibraphone": { releaseTime: 0.25, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
+		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.52 },
+		"steel drum": { releaseTime: 0.25, releasePatch: 57.5, volume: 0.55 },
 		"marimba": { volume: 0.62 },
-		"synth lead": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.7 },
+		"synth lead": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.67 },
 		"synth pad": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.67 },
-		"timpani": { releaseTime: 0.1 },
+		"timpani": { releaseTime: 0.1, volume: 0.8 },
 		"whistle": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.55 },
 		"accordion": { loop: true, loopStart: 2, releasePatch: 59, loopEnd: 25, volume: [[48, 0.45], [60, 0.4]] },
-		"orchestra hit": { releaseTime: 1, releasePatch: 63 },
+		"orchestra hit": { releaseTime: 1, releasePatch: 63, volume: 0.75 },
 		"melodic tom": { releaseTime: 0.25, releasePatch: 60 },
 		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: 0.85 },
-		"trumpet": { volume: [[48, 0.8], [60, 0.7], [72, 0.6]], loop: true },
-		"trumbone": { volume: 0.53, loop: true },
+		"trumpet": { volume: [[48, 0.78], [60, 0.66], [72, 0.58]], loop: true },
+		"trumbone": { volume: 0.5, loop: true },
 		"taiko drum": { releaseTime: 0.25, releasePatch: 62, volume: 0.8 },
-		"reverse cymbal": {},
-		"gumshot": {},
+		"reverse cymbal": { volume: 0.55 },
+		"gumshot": { releaseTime: 1 },
 		"agogo": { releaseTime: 0.25 },
 		"warm": { releaseTime: 0.5, loop: true, volume: 0.55 },
 	}
@@ -141,7 +141,7 @@ var MidSE = (function(){
 			file: "8158cc2e2219fb6f7cbfdfd051a3ed72.wav"
 		},
 		"claves": {
-			title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+			title: "My little pony-season 8 episode 10:The Break Up Breakdown",
 			file: "ef64be4f8da4730868cc931f3a15656f.wav"
 		},
 		"wood": {
@@ -1053,10 +1053,10 @@ var MidSE = (function(){
 	}
 	var MidiSoundEngine = function() {
 		this.node = audioContext.createGain();
-		this.node.gain.value = 1;
-	    this.node.connect(audioContext.destination);
-	    this.node2 = audioContext.createGain();
-	    this.node2.connect(this.node);
+		this.node.gain.value = 0.7;
+		this.node.connect(audioContext.destination);
+		this.node2 = audioContext.createGain();
+		this.node2.connect(this.node);
 		this.decodeNoteQueue = [];
 		this.soundbank = soundbank;
 		this.noteTracker = 0;
@@ -1224,7 +1224,7 @@ var MidSE = (function(){
 			source.connect(note);
 			note.connect(this.node2);
 			const gain = note.gain;
-			gain.value = (n.volume * (span.volume || 1)) * 0.85;
+			gain.value = (n.volume * (span.volume || 1)) * 0.8;
 			var _this = this;
 			source.start();
 		}
