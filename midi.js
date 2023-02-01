@@ -1,11 +1,9 @@
 /*
-Midi Sound Engine v2.0.6
+Midi Sound Engine v2.1.0
 
 my custom sound engine
 
-https://scratch.mit.edu/projects/718048299/
-
-2023/1/26 Anim Tred
+2023/02/01 Anim Tred
 */
 
 var MidSE = (function(){
@@ -46,7 +44,7 @@ var MidSE = (function(){
 		"conga": {},
 		"open conga": {},
 		"mute conga": {},
-		"acoustic bass drum": {},
+		"acoustic bass drum": { volume: 0.8 },
 	}
 	var INSTRUMENT = {
 		"piano": { releaseTime: 0.5, volume: [[36, 0.8], [48, 0.65], [60, 0.4], [72, 0.3]] },
@@ -65,16 +63,16 @@ var MidSE = (function(){
 		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.5]] },
 		"wooden flute": { releasePatch: 58, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.8], [72, 0.7]]},
 		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.65], [48, 0.55], [60, 0.4]] },
-		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.61 },
+		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.56 },
 		"vibraphone": { releaseTime: 0.25, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
 		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.52 },
 		"steel drum": { releaseTime: 0.25, releasePatch: 57.5, volume: 0.55 },
 		"marimba": { volume: 0.62 },
 		"synth lead": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.67 },
-		"synth pad": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.67 },
+		"synth pad": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
 		"timpani": { releaseTime: 0.1, volume: 0.8 },
 		"whistle": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.55 },
-		"accordion": { loop: true, loopStart: 2, releasePatch: 59, loopEnd: 25, volume: [[48, 0.45], [60, 0.4]] },
+		"accordion": { loop: true, loopStart: 2, releasePatch: 59, loopEnd: 25, volume: [[48, 0.42], [60, 0.36]] },
 		"orchestra hit": { releaseTime: 1, releasePatch: 63, volume: 0.75 },
 		"melodic tom": { releaseTime: 0.25, releasePatch: 60 },
 		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: 0.85 },
@@ -263,11 +261,11 @@ var MidSE = (function(){
 		},
 		"clarinet": {
 			title: "My Little Pony Friendship Is Magic Season 4 Episode 21 Testing, 1, 2, 3 HD",
-			file: "aa7745aa93786edb05f32e7d38d4303b.wav"
+			file: "086fb0c3d8dfab35aaba3c8e1dfb05af.wav"
 		},
 		"saxophone": {
 			title: "My Little Pony Friendship is Magic season 2 episode 22 \"Hurricane Fluttershy\"",
-			file: "cc6241a12f4f0917220f0316daf1b257.wav"
+			file: "aa878420c089b36eab7064b70ac27818.wav"
 		},
 		"violin": {
 			title: "Peppa Pig - Musical Instruments (full episode)",
@@ -279,15 +277,15 @@ var MidSE = (function(){
 		},
 		"overdriven guitar": {
 			title: "Friendship is Musical VGM #1",
-			file: "801432e4c52b659d64cf78f2f6334c85.wav"
+			file: "578d9cba77e8d6f578b31d5f4a31c151.wav"
 		},
 		"flute": {
 			title: "Friendship is Musical | Season 5 (First Half)",
-			file: "a0633268d3a66f5dadafba086c06347d.wav"
+			file: "24843dba9bbe011857c33f1cdfaedab7.wav"
 		},
 		"wooden flute": {
 			title: "Peppa Pig Makes Music Instrument with Marbles | Peppa Pig Official Family Kids Cartoon",
-			file: "0e2654aa4377850f6e0323d55e67c023.wav"
+			file: "49589ee679b86fb05a411ebc302d407d.wav"
 		},
 		"bassoon": {
 			title: "Friendship is Randomly Musical 5",
@@ -295,7 +293,7 @@ var MidSE = (function(){
 		},
 		"choir": {
 			title: "Friendship is Musical | Season 1 Episode 21-22",
-			file: "0ed00326b9f9ac8b1d7b02676c828c35.wav"
+			file: "5ac45c5d9602af8cbd8d57f17d7c7538.wav"
 		},
 		"vibraphone": {
 			title: "My Little Pony friendship is magic season 2 episode 10 \"Secret of My Excess\"",
@@ -315,11 +313,11 @@ var MidSE = (function(){
 		},
 		"synth lead": {
 			title: "Friendship is Musical | Season 1 Episode 21-22",
-			file: "2a891694b76e6f08e6e19029fd3a4485.wav"
+			file: "361deaf705ebda27e0bb0be9184fb397.wav"
 		},
 		"synth pad": {
 			title: "Friendship is Musical | Season 1 Episode 13-14",
-			file: "a5b6cdc3cfbd0012af4495a769c58b11.wav"
+			file: "6dd9834236dfc66bea70e387c1481941.wav"
 		},
 		"timpani": {
 			title: "Peppa Pig - Musical Instruments (full episode)",
@@ -612,7 +610,7 @@ var MidSE = (function(){
 		this.instrument = e.instrument;
 		this.volume = e.volume;
 		this.type = "note";
-		this.channel = 0;
+		this.channel = e.channel;
 	}
 	var Drum = function(e) {
 		this.duraction = e.duraction;
@@ -620,12 +618,13 @@ var MidSE = (function(){
 		this.drum = e.drum;
 		this.volume = e.volume;
 		this.type = "drum";
-		this.channel = 0;
+		this.channel = e.channel;
 	}
 	var MidiLoader = function(data) {
 		this.data = new Uint8Array(data);
 		this.index = 0;
 		this.tracks = [];
+		this.trackResult = [];
 		this.tempo = 0;
 		this.chuckSize = 0;
 		this.finalList = {
@@ -660,15 +659,18 @@ var MidSE = (function(){
 		var index = 0;
 		for (var i = 0; i < this.finalList.start.length; i++) {
 			if (this.finalList.instrument[index] < 128) {
-				fgf.push([this.finalList.instrument[index] + 1, this.finalList.pitch[index], this.finalList.duration[index], this.finalList.start[index], this.finalList.volume[index]]);
+				fgf.push([this.finalList.instrument[index] + 1, this.finalList.pitch[index], this.finalList.duration[index], this.finalList.start[index], this.finalList.volume[index], this.finalList.channel[index]]);
 			} else {
-				fgf.push([0, this.finalList.instrument[index] - 127, this.finalList.duration[index], this.finalList.start[index], this.finalList.volume[index]]);
+				fgf.push([0, this.finalList.instrument[index] - 127, this.finalList.duration[index], this.finalList.start[index], this.finalList.volume[index], this.finalList.channel[index]]);
 			}
 			index += 1;
 		}
 		return {
 			"name": "Midi File",
-			"notes": fgf
+			"notes": fgf,
+			"tracks": this.trackResult,
+			"tempo": this.timeDivision,
+			"formatType": this.formatType
 		}
 	}
 	MidiLoader.prototype.MunchData = function() {
@@ -704,6 +706,10 @@ var MidSE = (function(){
 			this.cleanProcessAllTracksDataIncludingTempoData(((!(this.formatType == 1)) || i == 0));
 			this.trackNumber = (i + 1);
 			this.ProcessTrackNumber(i);
+			this.trackResult.push({
+				newlist: JSON.parse(JSON.stringify(this.newList)),
+				pulseCounter: this.pulseCounter
+			});
 			this.convertToNoteBlocks();
 		}
 		this.cleanProcessAllTracksDataIncludingTempoData(true);
@@ -947,6 +953,7 @@ var MidSE = (function(){
 			case 9:
 			case 32:
 			case 33:
+			case 75:
 			case 84:
 			case 88:
 			case 89:
@@ -1036,8 +1043,8 @@ var MidSE = (function(){
 			kjjh.push(this.ReadBase64(4));
 			kjjh.push(this.ReadBase64(4));
 			kjjh.push(this.ReadBase64(2));
+			kjjh.push(kjjh[0] * 80);
 			sp += kjjh[3];
-
 			fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] / 1000, sp / 1000, kjjh[4]])
 		}
 		return fdgdfg;
@@ -1054,9 +1061,9 @@ var MidSE = (function(){
 	var MidiSoundEngine = function() {
 		this.node = audioContext.createGain();
 		this.node.gain.value = 0.7;
-		this.node.connect(audioContext.destination);
-		this.node2 = audioContext.createGain();
-		this.node2.connect(this.node);
+	    this.node.connect(audioContext.destination);
+	    this.node2 = audioContext.createGain();
+	    this.node2.connect(this.node);
 		this.decodeNoteQueue = [];
 		this.soundbank = soundbank;
 		this.noteTracker = 0;
@@ -1184,6 +1191,9 @@ var MidSE = (function(){
 		return samples || 1;
 	}
 	MidiSoundEngine.prototype.playNotes = function(n) {
+		if (n.volume < 0.001) {
+			return;
+		}
 		if (n.type == 'note') {
 			var span = INSTRUMENT[MIDI_INSTRUMENT[n.instrument - 1]];
 			if (!span) return;
@@ -1352,13 +1362,13 @@ var MidSE = (function(){
 		var loader = new MidiLoader(data);
 		loader.load();
 		this.loadMidi(JSON.stringify(loader.CompressAndStore()));
-
 	}
 	MidiSoundEngine.prototype.loadMidi = function(data) {
 		MSE.stop();
 		var data_1 = this.getMidi(data);
 		this.decodeNoteQueue = [];
 		this.songs = data_1.name;
+		this.resultMid = data_1;
 		var notes = data_1.notes;
 		var fdg = notes[0][3];
 		var gfd = 100;
@@ -1374,6 +1384,7 @@ var MidSE = (function(){
 						times: notes[i][3] - fdg,
 						pitch: notes[i][1],
 						instrument: Math.round(notes[i][0]),
+						channel: notes[i][5],
 						volume: (notes[i][4] / gfd)
 					}));
 					if (MIDI_INSTRUMENT[Math.round(notes[i][0]) - 1]) {
@@ -1386,6 +1397,7 @@ var MidSE = (function(){
 						duraction: notes[i][2],
 						times: notes[i][3] - fdg,
 						drum: Math.round(notes[i][1]),
+						channel: notes[i][5],
 						volume: (notes[i][4] / gfd)
 					}));
 					if (DRUMS_MIDI[Math.round(notes[i][1]) - 1]) {
