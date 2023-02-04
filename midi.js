@@ -1,5 +1,5 @@
 /*
-Midi Sound Engine v2.2
+Midi Sound Engine v2.2.6
 
 my custom sound engine
 
@@ -23,9 +23,9 @@ var MidSE = (function(){
 		"high tom": {},
 		"tambourine": { volume: 0.35 },
 		"hand": { volume: 0.8 },
-		"claves": { volume: 0.51 },
+		"claves": { volume: 0.35 },
 		"wood": { volume: 0.9 },
-		"cowbell": { volume: 0.7 },
+		"cowbell": { volume: 0.63 },
 		"triangle": { volume: 0.9 },
 		"bongo": {},
 		"cabasa": {},
@@ -47,37 +47,37 @@ var MidSE = (function(){
 		"acoustic bass drum": { volume: 0.8 },
 	}
 	var INSTRUMENT = {
-		"piano": { releaseTime: 0.2, volume: [[36, 0.8], [48, 0.65], [60, 0.4], [72, 0.3]] },
-		"electric piano": { releaseTime: 0.2, volume: 0.7 },
-		"organ": { releaseTime: 0.2, volume: 0.66, releasePatch: 52 },
-		"guitar": { releaseTime: 0.2, volume: 0.57 },
-		"electric guitar": { releaseTime: 0.2, releasePatch: 60, volume: 0.5 },
+		"piano": { releaseTime: 0.15, volume: [[36, 0.8], [48, 0.65], [60, 0.4], [72, 0.3]] },
+		"electric piano": { releaseTime: 0.15, volume: 0.7 },
+		"organ": { releaseTime: 0.15, volume: 0.63, releasePatch: 52 },
+		"guitar": { releaseTime: 0.15, volume: 0.57 },
+		"electric guitar": { releaseTime: 0.15, releasePatch: 60, volume: 0.5 },
 		"bass": { releaseTime: 0.25, volume: [[36, 0.75], [48, 0.65]] },
-		"pizzicato": { releaseTime: 0.25, volume: [[48, 0.55], [60, 0.45]], releasePatch: 47 },
+		"pizzicato": { releaseTime: 0.25, volume: [[48, 0.5], [60, 0.42]], releasePatch: 47 },
 		"harmonica": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.5 },
 		"clarinet": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
 		"saxophone": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6, releasePatch: 59.75 },
-		"violin": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.62 },
+		"violin": { releaseTime: 0.15, loop: true, loopStart: 2, loopEnd: 25, volume: 0.62 },
 		"violin_2": { releaseTime: 0.5, loop: true, loopStart: 2, loopEnd: 25, volume: 0.58 },
 		"overdriven guitar": { releasePatch: 61, loop: true, loopStart: 2, loopEnd: 4, volume: 0.67 },
 		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.5]] },
 		"wooden flute": { releasePatch: 58, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.8], [72, 0.7]]},
-		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.7], [48, 0.6], [60, 0.48]] },
+		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.76], [48, 0.64], [60, 0.52]] },
 		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: 0.56 },
 		"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
 		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.52 },
 		"steel drum": { releaseTime: 0.2, releasePatch: 57.5, volume: 0.55 },
 		"marimba": { volume: 0.62 },
 		"synth lead": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: 0.67 },
-		"synth pad": { releaseTime: 0.2, loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
+		"synth pad": { releaseTime: 0.15, loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
 		"timpani": { releaseTime: 0.1, volume: 0.8 },
 		"whistle": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.55 },
 		"accordion": { loop: true, loopStart: 2, releasePatch: 59, loopEnd: 25, volume: [[48, 0.4], [60, 0.34]] },
 		"orchestra hit": { releaseTime: 1, releasePatch: 63, volume: 0.75 },
 		"melodic tom": { releaseTime: 0.25, releasePatch: 60 },
-		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: 0.85 },
+		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: [[36, 1], [48, 0.9], [60, 0.8]] },
 		"trumpet": { volume: [[48, 0.78], [60, 0.66], [72, 0.58]], loop: true },
-		"trumbone": { volume: 0.5, loop: true },
+		"trumbone": { volume: [[48, 0.6], [60, 0.5], [60, 0.43]], loop: true },
 		"taiko drum": { releaseTime: 0.25, releasePatch: 62, volume: 0.8 },
 		"reverse cymbal": { volume: 0.55 },
 		"gumshot": { releaseTime: 1 },
@@ -144,7 +144,7 @@ var MidSE = (function(){
 		},
 		"wood": {
 			title: "Friendship is Randomly Musical 1",
-			file: "1a281eba5780f4db5f27f2c14eb17f7f.wav"
+			file: "94bf611190e55266b6250b8bbc17ed24.wav"
 		},
 		"cowbell": {
 			title: "Chicken Little",
@@ -192,7 +192,7 @@ var MidSE = (function(){
 		},
 		"low wood": {
 			title: "Friendship is Randomly Musical 1",
-			file: "884616631cd9920b9c896570bec589e2.wav"
+			file: "28050489c468fd887d1b45812d183bd3.wav"
 		},
 		"hi bongo": {
 			title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
@@ -289,7 +289,7 @@ var MidSE = (function(){
 		},
 		"bassoon": {
 			title: "Friendship is Randomly Musical 5",
-			file: "9efcb0828d69d54ce42171aacb6d9394.wav"
+			file: "925bc0db0ad640181cbbd961c326d1fd.wav"
 		},
 		"choir": {
 			title: "Friendship is Musical | Season 1 Episode 21-22",
@@ -333,11 +333,11 @@ var MidSE = (function(){
 		},
 		"melodic tom": {
 			title: "My Little Pony Season 5 Episode 9",
-			file: "3b3fced980db142e737e15321a7eb7ef.wav"
+			file: "baa611917d9f86ec22b1240a0df9e509.wav"
 		},
 		"church organ": {
 			title: "My Little Pony: Friendship is Magic - Season 4 Episode 3",
-			file: "b24cce3fd0b5be42a6fece8a364a37f2.wav"
+			file: "9bfed56d3d764247e6a1e74694ae1865.wav"
 		},
 		"trumpet": {
 			title: "[1080p] My little Pony Friendship is Magic Season 6 Episode 14 The Cart Before the Ponies",
@@ -410,7 +410,7 @@ var MidSE = (function(){
 		"violin",  "bassoon", "vibraphone", "agogo", "steel drum",
 		"marimba", "taiko drum", "melodic tom", "melodic tom", "reverse cymbal",
 		// 121-128
-		"electric guitar", "wooden flute", "steel drum", "wooden flute",
+		"electric guitar", "wooden flute", "steel drum", "steel drum",
 		"vibraphone", "steel drum", "choir", "gumshot"
 	]
 	var DRUMS_MIDI = [
@@ -462,38 +462,6 @@ var MidSE = (function(){
 		"mute triangle", // 46-80: Mute Triangle
 		"triangle", // 47-81: Open Triangle
 	];
-	var mod = function (x, y) {
-		var r = x % y;
-		if (r / y < 0) {
-			r += y;
-		}
-		return r;
-	};
-	var nullist = function (x, y) {
-		if (x === undefined || x === null) {
-			return y;
-		}
-		return x;
-	};
-	var listIndex = function (list, index, length) {
-		var i = index | 0;
-		if (i === index) return i > 0 && i <= length ? i - 1 : -1;
-		if (index === 'random' || index === 'any') {
-			return Math.random() * length | 0;
-		}
-		if (index === 'last') {
-			return length - 1;
-		}
-		return i > 0 && i <= length ? i - 1 : -1;
-	};
-	var insertInList = function (list, index, value) {
-		var i = listIndex(list, index, list.length + 1);
-		if (i === list.length) {
-			list.push(value);
-		} else if (i !== -1) {
-			list.splice(i, 0, value);
-		}
-	};
 	const ASSET_URL = 'https://assets.scratch.mit.edu/internalapi/asset/$md5ext/get/';
 	function loadSoundbankFile(src) {
 		return fetch(src).then(function(r) { return r.arrayBuffer() });
@@ -603,24 +571,7 @@ var MidSE = (function(){
 			soundbank[name] = sound;
 		});
 	}
-	var Note = function(e) {
-		this.duraction = e.duraction;
-		this.times = e.times;
-		this.pitch = e.pitch;
-		this.instrument = e.instrument;
-		this.volume = e.volume;
-		this.type = "note";
-		this.channel = e.channel;
-	}
-	var Drum = function(e) {
-		this.duraction = e.duraction;
-		this.times = e.times;
-		this.drum = e.drum;
-		this.volume = e.volume;
-		this.type = "drum";
-		this.channel = e.channel;
-	}
-	var MidiLoader = function(data) {
+	var MidiParser = function(data) {
 		this.data = new Uint8Array(data);
 		this.index = 0;
 		this.tracks = [];
@@ -628,6 +579,7 @@ var MidSE = (function(){
 		this.chuckSize = 0;
 		this.duration = 0;
 		this.finalList = [];
+		this.finalPitchBend = [];
 		this.trackNote = [];
 		this.newList = {
 			channel: [],
@@ -642,21 +594,38 @@ var MidSE = (function(){
 			volume: [],
 		}
 	}
-	MidiLoader.prototype.load = function() {
+	MidiParser.prototype.load = function() {
 		this.ReadHeader();
 		this.splitTracks();
 		this.processAllTracks();
 	}
-	MidiLoader.prototype.CompressAndStore = function() {
-		return {
-			"name": "Midi File",
-			"tracks": this.trackNote,
-			"tempo": this.timeDivision,
-			"duration": this.duration,
-			"formatType": this.formatType
+	MidiParser.prototype.ReadHeader = function() {
+		// After reading through the definitions of the three different MIDI formats a number of times I have come up with the following
+		// summations for the types -
+		// Type 0: Everything happens on Track 1 - any others tracks in a type 0 MIDI should incur an error
+		// Type 1: Track 1 contains all timing related events. All other tracks are independent of each other except that they share the timing from track 1
+		// Type 2: All tracks are completely independent
+		// From these, my idea for unifying the way they can all be handled in the code is as follows -
+		// Type 2 is essentially multiple occurences of type 0. I.e. All tracks contain timing and everything else for that specific track
+		// For type 1, if I inject the timing from track 1 into all the other tracks and then remove track 1 then it essentially becomes a type 2
+		// For type 2, if I inject all the tracks into track 1 then it becomes a type 0
+		// This means that I can ultimately handle the parsing by treating every post-edited file as a type 0 file
+		if (!(this.ReadUnsignedLong() == 1297377380)) {
+			throw new Error("Invalid MIDI file");
+		}
+		if (!(this.ReadUnsignedLong() == 6)) {
+			throw new Error("Invalid MIDI file");
+		}
+		this.formatType = this.ReadUnsignedShort();
+		this.numberTracks = this.ReadUnsignedShort();
+		this.timeDivision = this.ReadUnsignedShort();
+		this.pulsesPerQuarterBeat = this.timeDivision;
+		if (this.timeDivision > 32767) {
+			throw new Error("Timecode timing intervals not currently supported");
 		}
 	}
-	MidiLoader.prototype.splitTracks = function() {
+	MidiParser.prototype.splitTracks = function() {
+		// Store byte data for all tracks separately
 		this.tracks = [];
 		var trackNumber = 1;
 		while (!(trackNumber > this.numberTracks)) {
@@ -675,20 +644,28 @@ var MidSE = (function(){
 		}
 		this.data.length = 0;
 	}
-	MidiLoader.prototype.processAllTracks = function() {
+	MidiParser.prototype.CompressAndStore = function() {
+		return {
+			"name": "Midi File",
+			"tracks": this.trackNote,
+			"tempo": this.timeDivision,
+			"duration": this.duration,
+			"formatType": this.formatType
+		}
+	}
+	MidiParser.prototype.processAllTracks = function() {
 		this.trackNote = [];
 		for (var i = 0; i < this.tracks.length; i++) {
 			this.cleanProcessAllTracksDataIncludingTempoData(((!(this.formatType == 1)) || i == 0));
-			this.trackNumber = (i + 1);
+			this.trackNumber = i;
 			this.ProcessTrackNumber(i);
 			this.convertToNoteBlocks();
-			if (this.finalList.length > 0) {
-				this.trackNote.push(this.finalList);
-			}
+			this.trackNote.push([i + 1, this.finalList, this.finalPitchBend]);
 		}
 		this.cleanProcessAllTracksDataIncludingTempoData(true);
 	}
-	MidiLoader.prototype.ProcessTrackNumber = function(trackNumber) {
+	MidiParser.prototype.ProcessTrackNumber = function(trackNumber) {
+		//Set a default tempo of 120 bpm
 		this.tempo = (500000 / this.timeDivision);
 		this.data = this.tracks[trackNumber];
 		this.chuckSize = this.data.length;
@@ -696,8 +673,7 @@ var MidSE = (function(){
 		this.eventType = '';
 		this.index = 0;
 		while (!(this.index > (this.chuckSize - 1))) {
-			var hgg = this.ReadVariableLength();
-			this.pulseCounter += hgg;
+			this.pulseCounter += this.ReadVariableLength();
 			this.ReadMidiEvent();
 			if (this.eventType == "midi") {
 				this.ProcessMidiControlEvent();
@@ -708,15 +684,16 @@ var MidSE = (function(){
 					if (this.eventType == "system") {
 						this.ProcessSystemExclusiveEvent();
 					} else {
+						// This is probably a non-standard meta event or similar
 					}
 				}
 			}
 		}
 		if (!(this.index == this.chuckSize)) {
-			throw new Error("Track number " + this.trackNumber + " has overrun - invalid MIDI file");
+			throw new Error("Track number " + (this.trackNumber + 1) + " has overrun - invalid MIDI file");
 		}
 	}
-	MidiLoader.prototype.ProcessMidiControlEvent = function() {
+	MidiParser.prototype.ProcessMidiControlEvent = function() {
 		if (this.eventTypeValue == 8) {
 			this.NoteOff();
 		}
@@ -730,11 +707,14 @@ var MidSE = (function(){
 		if (this.eventTypeValue == 12) {
 			this.SetInstrument();
 		}
+		// Ignored MIDI Channel Voice Messages are -
+		// 10: Poly key pressure
+		// 11: Controller change
+		// 13: Channel pressure / Pitch bend
 	}
-	MidiLoader.prototype.NoteOff = function() {
+	MidiParser.prototype.NoteOff = function() {
 		var temp = this.newList.pitch.length - 1;
-		var f = this.newList.pitch.length;
-		for (var i = 0; i < f; i++) {
+		for (var i = 0; i < this.newList.pitch.length; i++) {
 			if (((this.trackNumber == this.newList.trackNumber[temp] && this.parameter1 == this.newList.pitch[temp]) && (this.midiChannel == this.newList.channel[temp] && this.newList.noteOn[temp] == true))) {
 				this.newList.tickOff[temp] = this.pulseCounter;
 				this.newList.noteOn[temp] = false;
@@ -743,13 +723,14 @@ var MidSE = (function(){
 			temp -= 1;
 		}
 	}
-	MidiLoader.prototype.NoteOn = function() {
+	MidiParser.prototype.NoteOn = function() {
 		this.newList.tickOn.push(this.pulseCounter);
 		this.newList.tickOff.push(0);
 		this.newList.trackNumber.push(this.trackNumber);
 		this.newList.channel.push(this.midiChannel);
 		if (this.midiChannel == 9) {
 			if (this.parameter1 < 35 || this.parameter1 > 81) {
+				// We're receiving an invalid percussion instrument for some reason. Not much we can do really. Hardly worth a warning...
 			} else {
 				if (typeof DRUMS_MIDI[this.parameter1 - 35] == "undefined") {
 					console.warn("Assign percussion instrument number " + this.parameter1 + " (" + DRUMS_MIDI[this.parameter1 - 35] + ")");
@@ -760,44 +741,67 @@ var MidSE = (function(){
 			this.newList.instrument.push(this.instrumentName || 0);
 		}
 		this.newList.pitch.push(this.parameter1);
-		this.newList.volume.push(Math.round(((this.parameter2 * 100) / 127)));
+		this.newList.volume.push(Math.round((((this.parameter2 - 1) * 100) / 127)));
 		this.newList.noteOn.push(true);
 	}
-	MidiLoader.prototype.SetInstrument = function() {
+	MidiParser.prototype.SetInstrument = function() {
 		if (typeof MIDI_INSTRUMENT[this.parameter1] == "undefined") {
 			console.warn("Assign musical instrument for group " + (Math.floor(this.parameter1 / 8) + 1) + " instrument " + this.parameter1 + " (" + MIDI_INSTRUMENT[this.parameter1] + ")")
 		}
 		this.instrumentName = this.parameter1;
 	}
-	MidiLoader.prototype.ProcessMetaEvent = function() {
+	MidiParser.prototype.ProcessMetaEvent = function() {
 		if (this.command == 47) {
+			// This is the end-of-track meta command so force the pointer to the end of the chunk to exit gracefully
 			this.index = this.chuckSize;
 		}
 		if (this.command == 81) {
 			this.SetTempo();
 		}
+		// Most meta events are ignored. These are -
+		// 0: Sequence number
+		// 1: Text event
+		// 2: Copyright notice
+		// 3: Sequence/Track name
+		// 4: Instrument name
+		// 5: Lyric
+		// 6: Marker
+		// 7: Cue point
+		// 32: MIDI Channel prefix
+		// 84: SMTPE offset
+		// 88: Time signature
+		// 89: Key signature
+		// 127: Sequencer-specific meta-event
 	}
-	MidiLoader.prototype.SetTempo = function() {
+	MidiParser.prototype.SetTempo = function() {
 		this.newList.tempoTick.push(this.pulseCounter);
 		this.newList.tempoSetting.push((this.parameter1 / this.timeDivision));
 	}
-	MidiLoader.prototype.ProcessSystemExclusiveEvent = function() {
+	MidiParser.prototype.ProcessSystemExclusiveEvent = function() {
+		// All system exclusive events are ignored. These are -
+		// 240: F0 Sysex event
+		// 247: F7 Sysex event
 	}
-	MidiLoader.prototype.convertToNoteBlocks = function() {
+	MidiParser.prototype.convertToNoteBlocks = function() {
+		// This block simply scans through all of the note and tempo information that we've recorded
+		// calculating the actual note lengths (including if the tempo changes mid-note)
+		// and inserts the start-tick, pitch, duration, volume, instrument, channel and track
+		// for each note at the correct position in the lists
 		var totalPulses = this.pulseCounter;
 		this.pulseCounter = 0;
 		var index = 0;
+		var pitchBendIndex = 0;
 		this.tempoIndex = 0;
-		this.targetIndex = 1;
+		this.targetIndex = 0;
 		this.currentPulseInSeconds = 0;
 		while ((!(this.pulseCounter > totalPulses)) && (!(index >= this.newList.tickOn.length))) {
 			var temp = totalPulses;
 			if (!(this.tempoIndex >= this.newList.tempoTick.length)) {
-				temp = nullist(this.newList.tempoTick[this.tempoIndex], 0);
+				temp = this.newList.tempoTick[this.tempoIndex];
 			}
 			if (!(index > (this.newList.tickOn.length - 1))) {
-				if (nullist(this.newList.tickOn[index], 0) < temp) {
-					temp = nullist(this.newList.tickOn[index], 0);
+				if (this.newList.tickOn[index] < temp) {
+					temp = this.newList.tickOn[index];
 				}
 			}
 			if (temp >= totalPulses) {
@@ -806,7 +810,7 @@ var MidSE = (function(){
 			this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
 			this.pulseCounter = temp;
 			while (!((!(this.newList.tempoTick[this.tempoIndex] == this.pulseCounter)) || this.tempoIndex >= this.newList.tempoSetting.length)) {
-				this.tempo = nullist(this.newList.tempoSetting[this.tempoIndex], 0);
+				this.tempo = this.newList.tempoSetting[this.tempoIndex];
 				this.tempoIndex += 1;
 			}
 			while (!((!(this.newList.tickOn[index] == this.pulseCounter)) || index >= this.newList.tickOff.length)) {
@@ -815,7 +819,7 @@ var MidSE = (function(){
 			}
 		}
 	}
-	MidiLoader.prototype.insertNoteCurrentlyAtIndex = function(index) {
+	MidiParser.prototype.insertNoteCurrentlyAtIndex = function(index) {
 		var lengthInMilliseconds = 0;
 		var pulseForCalculating = this.pulseCounter;
 		var pulsesRemainingForCalculating = (this.newList.tickOff[index] - this.newList.tickOn[index]);
@@ -835,16 +839,16 @@ var MidSE = (function(){
 		}
 		if (lengthInMilliseconds > 0) {
 			if (this.newList.instrument[index] < 128) {
-				this.finalList.push([this.newList.instrument[index] + 1, this.newList.pitch[index], Math.round(lengthInMilliseconds), Math.round(this.currentPulseInSeconds), this.newList.volume[index], ((this.newList.trackNumber[index] * 16) + this.newList.channel[index])]);
+				this.finalList.push([this.newList.instrument[index] + 1, this.newList.pitch[index], Math.round(lengthInMilliseconds), Math.round(this.currentPulseInSeconds), this.newList.volume[index], this.newList.channel[index]]);
 			} else {
-				this.finalList.push([0, this.newList.instrument[index] - 127, Math.round(lengthInMilliseconds), Math.round(this.currentPulseInSeconds), this.newList.volume[index], ((this.newList.trackNumber[index] * 16) + this.newList.channel[index])]);
+				this.finalList.push([0, this.newList.instrument[index] - 127, Math.round(lengthInMilliseconds), Math.round(this.currentPulseInSeconds), this.newList.volume[index], this.newList.channel[index]]);
 			}
 			if (Math.round(lengthInMilliseconds) + Math.round(this.currentPulseInSeconds) > this.duration) {
 				this.duration = Math.round(lengthInMilliseconds) + Math.round(this.currentPulseInSeconds);
 			}
 		}
 	}
-	MidiLoader.prototype.cleanProcessAllTracksDataIncludingTempoData = function(includingTempo) {
+	MidiParser.prototype.cleanProcessAllTracksDataIncludingTempoData = function(includingTempo) {
 		this.newList.channel.length = 0;
 		this.newList.instrument.length = 0;
 		this.newList.noteOn.length = 0;
@@ -854,12 +858,13 @@ var MidSE = (function(){
 		this.newList.trackNumber.length = 0;
 		this.newList.volume.length = 0;
 		this.finalList = [];
+		this.finalPitchBend = [];
 		if (includingTempo) {
 			this.newList.tempoSetting.length = 0;
 			this.newList.tempoTick.length = 0;
 		}
 	}
-	MidiLoader.prototype.ReadMidiEvent = function() {
+	MidiParser.prototype.ReadMidiEvent = function() {
 		var fd = this.ReadUnsignedByte();
 		if (fd == 255) {
 			this.eventType = 'meta';
@@ -872,43 +877,30 @@ var MidSE = (function(){
 			} else {
 				if (fd > 127) {
 					this.eventType = 'midi';
-					this.midiChannel = mod(fd, 16);
-					this.eventTypeValue = ((fd - this.midiChannel) / 16)
+					this.midiChannel = fd % 16;
+					this.eventTypeValue = ((fd - this.midiChannel) / 16);
 					this.ParseMidi();
 				} else {
+					// TODO: Ought to check the previous command was a midi one in which case this is referred to as "running status"
 					this.index -= 1;
 					this.ParseMidi();
 				}
 			}
 		}
 	}
-	MidiLoader.prototype.ParseMidi = function() {
+	MidiParser.prototype.ParseMidi = function() {
 		this.parameter1 = this.ReadUnsignedByte();
 		if (this.eventTypeValue == 12 || this.eventTypeValue == 13) {
+			// "Program change" and "Channel pressure" don't take an extra parameter
 			return;
 		}
 		this.parameter2 = this.ReadUnsignedByte();
 	}
-	MidiLoader.prototype.ParseSystemEvent = function() {
-		var rf = this.ReadVariableLength();
-		this.index += rf;
+	MidiParser.prototype.ParseSystemEvent = function() {
+		var temp = this.ReadVariableLength();
+		this.index += temp;
 	}
-	MidiLoader.COMMANDS = {
-		0: "Sequence number",
-		1: "Text event",
-		2: "Copyright notice",
-		3: "Sequence/Track name",
-		4: "Instrument name",
-		5: "Lyric",
-		6: "Marker",
-		7: "Cue point",
-		32: "MIDI Channel prefix",
-		84: "SMTPE offset",
-		88: "Time signature",
-		89: "Key signature",
-		127: "Sequencer-specific meta-event"
-	}
-	MidiLoader.prototype.ParseMetaData = function() {
+	MidiParser.prototype.ParseMetaData = function() {
 		switch (this.command) {
 			case 47:
 				this.ReadVariableLength();
@@ -933,6 +925,7 @@ var MidSE = (function(){
 			case 84:
 			case 88:
 			case 89:
+			case 93:
 			case 127:
 				var count = this.ReadVariableLength();
 				var g = '';
@@ -953,31 +946,16 @@ var MidSE = (function(){
 		}
 		this.eventType = undefined;
 	}
-	MidiLoader.prototype.ReadHeader = function() {
-		if (!(this.ReadUnsignedLong() == 1297377380)) {
-			throw new Error("Invalid MIDI file");
-		}
-		if (!(this.ReadUnsignedLong() == 6)) {
-			throw new Error("Invalid MIDI file");
-		}
-		this.formatType = this.ReadUnsignedShort();
-		this.numberTracks = this.ReadUnsignedShort();
-		this.timeDivision = this.ReadUnsignedShort();
-		this.pulsesPerQuarterBeat = this.timeDivision;
-		if (this.timeDivision > 32767) {
-			throw new Error("Timecode timing intervals not currently supported");
-		}
-	}
-	MidiLoader.prototype.ReadUnsignedLong = function() {
+	MidiParser.prototype.ReadUnsignedLong = function() {
 		return this.ReadBytes(4);
 	}
-	MidiLoader.prototype.ReadUnsignedByte = function() {
+	MidiParser.prototype.ReadUnsignedByte = function() {
 		return this.ReadBytes(1);
 	}
-	MidiLoader.prototype.ReadUnsignedShort = function() {
+	MidiParser.prototype.ReadUnsignedShort = function() {
 		return this.ReadBytes(2);
 	}
-	MidiLoader.prototype.ReadVariableLength = function() {
+	MidiParser.prototype.ReadVariableLength = function() {
 		var value = 0;
 		while (true) {
 			if (this.index > (this.data.length - 1)) {
@@ -985,13 +963,13 @@ var MidSE = (function(){
 			}
 			var temp = Math.round(this.data[this.index]);
 			this.index += 1;
-			value = ((value * 128) + mod(temp, 128));
+			value = ((value * 128) + (temp % 128));
 			if (temp < 128) {
 				return value;
 			}
 		}
 	}
-	MidiLoader.prototype.ReadBytes = function(byteCount) {
+	MidiParser.prototype.ReadBytes = function(byteCount) {
 		var d = 0;
 		for (var i = 0; i < byteCount; i++) {
 			if (this.index > (this.data.length - 1)) {
@@ -1018,9 +996,11 @@ var MidSE = (function(){
 			kjjh.push(this.ReadBase64(4));
 			kjjh.push(this.ReadBase64(4));
 			kjjh.push(this.ReadBase64(2));
-			kjjh.push(kjjh[0] * 16);
+			kjjh.push(kjjh[0] % 16);
 			sp += kjjh[3];
-			fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] / 1000, sp / 1000, kjjh[4]])
+			if (kjjh[2] > 0) {
+				fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] / 1000, sp / 1000, kjjh[4]]);
+			}
 		}
 		return fdgdfg;
 	}
@@ -1032,27 +1012,30 @@ var MidSE = (function(){
 		}
 		return value;
 	}
-	var MidiTrack = function(notes) {
+	var MidiTrack = function(notes, trackNumber) {
 		this.noteTracker = 0;
+		this.trackNumber = trackNumber;
 		this.decodeNoteQueue = notes;
 	}
 	MidiTrack.prototype.getNote = function(time, mute) {
 		var GS = [];
-		if (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) > this.decodeNoteQueue[this.noteTracker][3])) {
-			while (!(!this.decodeNoteQueue[this.noteTracker] || (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) < this.decodeNoteQueue[this.noteTracker][3])))) {
-				if (!mute) {
-					GS.push(this.noteTracker);
+		if (this.decodeNoteQueue.length > 0) {
+			if (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) > this.decodeNoteQueue[this.noteTracker][3])) {
+				while (!(!this.decodeNoteQueue[this.noteTracker] || (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) < this.decodeNoteQueue[this.noteTracker][3])))) {
+					if (!mute) {
+						GS.push(this.noteTracker);
+					}
+					this.noteTracker += 1;
 				}
-				this.noteTracker += 1;
 			}
-		}
-		this.noteTracker -= 1;
-		if (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) < this.decodeNoteQueue[this.noteTracker][3])) {
-			while (!(!this.decodeNoteQueue[this.noteTracker] || (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) > this.decodeNoteQueue[this.noteTracker][3])))) {
-				this.noteTracker -= 1;
+			this.noteTracker -= 1;
+			if (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) < this.decodeNoteQueue[this.noteTracker][3])) {
+				while (!(!this.decodeNoteQueue[this.noteTracker] || (this.decodeNoteQueue[this.noteTracker] && ((time * 1000000) > this.decodeNoteQueue[this.noteTracker][3])))) {
+					this.noteTracker -= 1;
+				}
 			}
+			this.noteTracker += 1;
 		}
-		this.noteTracker += 1;
 		return GS;
 	}
 	var MidiSoundEngine = function() {
@@ -1077,6 +1060,7 @@ var MidSE = (function(){
 		this.isPaused = true;
 		this.MidiTimer = 0;
 		this.pauseTime = 0;
+		this.concurrencyCounter = 0;
 		this.trackQueue = [];
 		this._soundbank = {};
 		this._soundbankLoaded = 0;
@@ -1084,7 +1068,7 @@ var MidSE = (function(){
 		this.interval = setInterval(this.step, 1000 / 60);
 	}
 	MidiSoundEngine.prototype.cleanup = function() {
-		this.trackQueue.length = [];
+		this.trackQueue = [];
 		if (this.oncleanup) {
 			this.oncleanup();
 		}
@@ -1236,7 +1220,7 @@ var MidSE = (function(){
 		return samples || 1;
 	}
 	MidiSoundEngine.prototype.playNotes = function(n) {
-		if (Math.floor(n.volume * 100) <= 1) {
+		if (n.volume == 0) {
 			return;
 		}
 		if (n.type == 'note') {
@@ -1251,7 +1235,8 @@ var MidSE = (function(){
 				source.loopEnd = 5;
 			}
 			source.connect(note);
-			source.playbackRate.value = Math.pow(2, (((span.releasePatch ? (n.pitch + (this.vidAudio(span.releasePatch, n.pitch) - 60)) : n.pitch) - 60) / 12));
+			var pitch = (span.releasePatch ? (n.pitch + (this.vidAudio(span.releasePatch, n.pitch) - 60)) : n.pitch);
+			source.playbackRate.value = Math.pow(2, ((pitch - 60) / 12));
 			const gain = note.gain;
 			gain.setValueAtTime(this.vidAudio(span.volume, n.pitch) * n.volume, audioContext.currentTime);
 			const releaseGain = audioContext.createGain();
@@ -1265,7 +1250,6 @@ var MidSE = (function(){
 			const releaseEnd = releaseStart + releaseDuration;
 			releaseGain.gain.setValueAtTime(1, releaseStart);
 			releaseGain.gain.linearRampToValueAtTime(0.0001, releaseEnd);
-			var _this = this;
 			source.start();
 			source.stop(releaseEnd);
 		} else if (n.type == 'drum') {
@@ -1280,11 +1264,11 @@ var MidSE = (function(){
 			note.connect(this.node2);
 			const gain = note.gain;
 			gain.value = (n.volume * (span.volume || 1)) * 0.8;
-			var _this = this;
 			source.start();
 		}
 	}
 	MidiSoundEngine.prototype.step = function() {
+		var newList = [];
 		this.DateTime = (Date.now() - this.frameStart) / 1000;
 		if (this.MidiTimer > this.duration && !this.isPaused) {
 			this.MidiTimer = this.duration;
@@ -1326,14 +1310,17 @@ var MidSE = (function(){
 								type: 1
 							});
 						}
-						playNote.push({
-							type: 'note',
-							instrument: n.instrument,
-							pitch: n.pitch,
-							isOn: true,
-							volume: n.volume,
-							dur: n.duraction,
-						});
+						if (this.node.gain.value) {
+							playNote.push({
+								type: 'note',
+								instrument: n.instrument,
+								pitch: n.pitch,
+								isOn: true,
+								volume: n.volume,
+								track: this.trackQueue[i].trackNumber,
+								dur: n.duraction,
+							});
+						}
 					}
 				} else if (n.type == 'drum') {
 					if (n.duraction > 0) {
@@ -1344,13 +1331,16 @@ var MidSE = (function(){
 								type: 0
 							});
 						}
-						playNote.push({
-							type: 'drum',
-							drum: n.drum,
-							volume: n.volume,
-							isOn: true,
-							dur: n.duraction,
-						});	
+						if (this.node.gain.value) {
+							playNote.push({
+								type: 'drum',
+								drum: n.drum,
+								volume: n.volume,
+								isOn: true,
+								track: this.trackQueue[i].trackNumber,
+								dur: n.duraction,
+							});
+						}
 					}
 				}
 			}
@@ -1400,7 +1390,7 @@ var MidSE = (function(){
 	}
 	MidiSoundEngine.prototype.loadMid = function(data) {
 		this.stop();
-		var loader = new MidiLoader(data);
+		var loader = new MidiParser(data);
 		var gf_h = Date.now();
 		loader.load();
 		this.loadedTime = Date.now() - gf_h;
@@ -1412,12 +1402,17 @@ var MidSE = (function(){
 		this.songs = data_1.name;
 		var tracks = data_1.tracks;
 		this.trackQueue = [];
-		for (var i = 0; i < tracks.length; i++) {
-			this.trackQueue.push(new MidiTrack(tracks[i]));
-		}
-		for (var i = 0; i < tracks.length; i++) {
-			for (var i1 = 0; i1 < tracks[i].length; i1++) {
-				var gf = tracks[i][i1];
+		if ("notes" in data_1) {
+			for (var i1 = 0; i1 < data_1.notes.length; i1++) {
+				var gf = data_1.notes[i1];
+				gf[2] *= 1000000;
+				gf[3] *= 1000000;
+			}
+			for (var i1 = 0; i1 < data_1.notes.length; i1++) {
+				var gf = data_1.notes[i1];
+				if (gf[2] + gf[3] > this.duration) {
+					this.duration = gf[2] + gf[3];
+				}
 				if (gf[0] > 0) {
 					if (gf[2]) {
 						if (MIDI_INSTRUMENT[Math.round(gf[0]) - 1]) {
@@ -1430,35 +1425,36 @@ var MidSE = (function(){
 					}
 				}
 			}
+			this.duration /= 1000000;
+			this.trackQueue.push(new MidiTrack(data_1.notes, 0));
+		} else {
+			for (var i = 0; i < tracks.length; i++) {
+				this.trackQueue.push(new MidiTrack(tracks[i][1], tracks[i][0]));
+			}
+			for (var i = 0; i < tracks.length; i++) {
+				for (var i1 = 0; i1 < tracks[i][1].length; i1++) {
+					var gf = tracks[i][1][i1];
+					if (gf[0] > 0) {
+						if (gf[2]) {
+							if (MIDI_INSTRUMENT[Math.round(gf[0]) - 1]) {
+								this._soundbank[MIDI_INSTRUMENT[Math.round(gf[0]) - 1]] = {};
+							}
+						}
+					} else {
+						if (DRUMS_MIDI[Math.round(gf[1]) - 1]) {
+							this._soundbank[DRUMS_MIDI[Math.round(gf[1]) - 1]] = {};
+						}
+					}
+				}
+			}
+			this.duration = (data_1.duration / 1000000);
 		}
-		this.duration = (data_1.duration / 1000000);
 		if (this.onload) {
 			this.onload();
 		}
-		//var notes = data_1.notes;
-		//var gfd = 100;
-		//var fdgdfgdfggdg = 0;
-		//this.decodeNoteQueue = notes;
-		//for (var i = 0; i < notes.length; i++) {
-		//	if (fdgdfgdfggdg < notes[i][3] + notes[i][2]) {
-		//		fdgdfgdfggdg = notes[i][3] + notes[i][2];
-		//	}
-		//	if (notes[i][0] > 0) {
-		//		if (notes[i][2]) {
-		//			if (MIDI_INSTRUMENT[Math.round(notes[i][0]) - 1]) {
-		//				this._soundbank[MIDI_INSTRUMENT[Math.round(notes[i][0]) - 1]] = {};
-		//			}
-		//		}
-		//	} else {
-		//		if (DRUMS_MIDI[Math.round(notes[i][1]) - 1]) {
-		//			this._soundbank[DRUMS_MIDI[Math.round(notes[i][1]) - 1]] = {};
-		//		}
-		//	}
-		//}
-		//this.duration = fdgdfgdfggdg;
 	}
 	return {
-		MidiLoader: MidiLoader,
+		MidiParser: MidiParser,
 		MidiSoundEngine: MidiSoundEngine,
 		SOUNDBANK_INFOS,
 		MIDI_INSTRUMENT,
