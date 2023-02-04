@@ -101,9 +101,39 @@
 						this.visualizer[i] = 0;
 						this.visualizer2[i] = 0;
 					}
-	                document.addEventListener('mousedown', this.onmousedown);
+					this.ontouchstart = this.ontouchstart.bind(this);
+					this.ontouchend = this.ontouchend.bind(this);
+					this.ontouchmove = this.ontouchmove.bind(this);
+					this.isTouch = ("ontouchstart" in window);
+					this.touchVis = !this.isTouch;
+					document.addEventListener('mousedown', this.onmousedown);
 					document.addEventListener('mouseup', this.onmouseup);
-                	document.addEventListener('mousemove', this.onmousemove);
+					document.addEventListener('mousemove', this.onmousemove);
+					document.addEventListener('touchstart', this.ontouchstart);
+					document.addEventListener('touchend', this.ontouchend);
+					document.addEventListener('touchmove', this.ontouchmove);
+				}
+				ontouchmove(e) {
+					var rect = this.canvas.getBoundingClientRect();
+					var gh = e.changedTouches[0];
+					if (gh) {
+						var x = (gh.clientX - rect.left);
+						var y = (gh.clientY - rect.top);
+						this.mouseX = x;
+						this.mouseY = y;
+					}
+				}
+				ontouchstart(e) {
+					this.mousePressed = true;
+					this.touchVis = true;
+				}
+				ontouchend(e) {
+					this.mousePressed = false;
+					this.touchVis = false;
+					if (this.isTouch) {
+						this.mouseX = -900;
+						this.mouseY = -900;
+					}
 				}
 				onprogress(e) {
 		            this.textprogress = e;
@@ -169,7 +199,7 @@
 					var g = (16 + (duH1 * (360 - 32)));
 					var radius = z_dir(g - this.mouseX, 16 - this.mouseY);
 					this.ctx.lineWidth = 18;
-					if (radius < 12 || this.isTimelineTime) {
+					if (this.touchVis && (radius < 12 || this.isTimelineTime)) {
 						this.ctx.beginPath();
 						this.ctx.lineCap = "round";
 						this.ctx.strokeStyle = "#FFF";
