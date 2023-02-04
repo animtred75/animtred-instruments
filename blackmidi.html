@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Black Midi - Midi Sound Engine</title>
+		<style type="text/css">
+			body{
+				overflow: hidden;
+				background: #000;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				color: #fff;
+			}
+			.dfgdg{
+				margin: 0;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			#sce {
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dfgdg">
+			<div class="contrs">
+				<button id="loadmidifile">Load Mid</button>
+				<button id="midiplay">Play/Pause</button>
+				<input type="range" name="" value="0" min="0" max="100000" id="yrtyryry" style="width: 72%;">
+				<br>
+				<label>Display Speed: </label>
+				<input type="range" name="" value="100" min="50" max="3000" id="vcbb" style="width: 35%;">
+				<label>Volume: </label>
+				<input type="range" name="" value="1" min="0" max="1" step="0.01" id="vcbb2" style="width: 15%;">
+				<label>Resize:</label>
+				<select id="resss">
+					<option value="1">640x360</option>
+					<option value="2">1280x720</option>
+				</select>
+			</div>
+			<canvas id="sce"></canvas>
+		</div>
+		<div style="position: absolute; bottom: 0%; left: 50%; transform: translate(-50%, 0%); padding: 8px;">
+			<a href="./">Midi Visualisation</a>
+			<a>Black Midi</a>
+		</div>
+		<script type="text/javascript" src="midi.js"></script>
+		<script type="text/javascript">
+			var BASE64 = "0123456789abcdefghijklmnopqrstuvwxyz!\"£$%^&*()-=[];'#,./_+{}:@~<";
+			var mod = function (x, y) {
+				var r = x % y;
+				if (r / y < 0) {
+					r += y;
+				}
+				return r;
+			};
+			function getDuraction(num) {
+				var txt = '';
+				if (Math.floor(num) > 3599) {
+					txt += '' + Math.floor(num / 3600);
+					txt += ':';
+					if (mod(Math.floor(num / 60), 60) > 9) {
+						txt += '' + mod(Math.floor(num / 60), 60);
+					} else {
+						txt += '0' + mod(Math.floor(num / 60), 60);
+					}
+					txt += ':';
+					if (mod(Math.floor(num), 60) > 9) {
+						txt += '' + mod(Math.floor(num), 60);
+					} else {
+						txt += '0' + mod(Math.floor(num), 60);
+					}
+				} else {
+					txt += '' + mod(Math.floor(num / 60), 60);
+					txt += ':';
+					if (mod(Math.floor(num), 60) > 9) {
+						txt += '' + mod(Math.floor(num), 60);
+					} else {
+						txt += '0' + mod(Math.floor(num), 60);
+					}
+				}
+				return txt;
+			}
+			var songData = [];
+			var dSongs = ["songs1", "songs2", "songs3", "songs4", "songs5", "songs6"];
+			var MSE = new MidSE.MidiSoundEngine();
+			window.MSE = MSE;
+			var Adfgdgfd = "01010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010";
+			var channelColor = [
+				"#6b1e6b", // 0
+				"#f1a450", // 1
+				"#32c914", // 2
+				"#505050", // 3
+				"#7f43ff", // 4
+				"#f17fc8", // 5
+				"#aad4aa", // 6
+				"#667f25", // 7
+				"#f1c914", // 8
+				"#6bf1e7", // 9
+				"#ca327f", // 10
+				"#0084ff", // 11
+				"#decaaa", // 12
+				"#cdf100", // 13
+				"#f14639", // 14
+				"#327f7f", // 15
+			];
+			var Bfdg = [
+				"#fff",
+				"#000"
+			]
+			var MidiRender = function (m, can) {
+				this.mse = m;
+				this.step.bind(this);
+				this.canvas = can;
+				this.displaySpeed = 100;
+				this.noteSize = 8.57;
+				this.xpos = 38.1;
+				this.scale = 1;
+				var g = 0;
+				this.xpiano = [];
+				for (var i = 0; i < Adfgdgfd.length; i++) {
+					if (Adfgdgfd[i] == "1") {
+						g += 0;
+						this.xpiano.push(g + 0.5);
+					} else {
+						g += 1;
+						this.xpiano.push(g);
+					}
+				}
+				this.channelCOLOR = 80;
+				this.channelMINE = 0;
+				this.indexRe = 0;
+				this.canvas.width = 640 * this.scale;
+				this.canvas.height = 360 * this.scale;
+				this.gd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+				this.gd2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+				this.ctx = this.canvas.getContext("2d");
+				this.start();
+				this.trackRender = [];
+				this.onload = this.onload.bind(this);
+				this.cleanup = this.cleanup.bind(this);
+				this.mse.onload = this.onload;
+				this.mse.oncleanup = this.cleanup;
+			}
+			MidiRender.prototype.resize = function (s) {
+				this.scale = s;
+				this.canvas.width = 640 * this.scale;
+				this.canvas.height = 360 * this.scale;
+			}
+			MidiRender.prototype.onload = function () {
+				this.trackRender = [];
+				for (var i = 0; i < this.mse.trackQueue.length; i++) {
+					this.trackRender.push({
+						indexRe: 0
+					});
+				}
+			}
+			MidiRender.prototype.cleanup = function () {
+				this.trackRender = [];
+			}
+			MidiRender.prototype.step = function (m) {
+				this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+				this.ctx.save();
+				this.ctx.scale(this.scale, this.scale);
+				var ghgf = 0;
+				var polyphon = 0;
+				var jghjghj = ["#333", "#222"];
+				var _L = 0;
+				for (var i = 0; i < 128; i++) {
+					if (Adfgdgfd[i] == '0') {
+						this.Draw_rectangle((this.xpiano[i] - this.xpos) * this.noteSize * 1, 0, this.noteSize * 1, 360, jghjghj[ghgf]);
+						_L += 1;
+						ghgf += 1;
+					}
+					this.gd[i] = 0;
+					this.gd2[i] = null;
+					if (ghgf == 2) {
+						ghgf = 0;
+					}
+				}
+				ghgf = 0;
+				_L = 0;
+				for (var i = 0; i < 128; i++) {
+					if (Adfgdgfd[i] == '1') {
+						this.Draw_rectangle((this.xpiano[i] - (this.xpos)) * this.noteSize * 1, 0, (this.noteSize * 0.5) * 1, 360, "#111");
+					}
+					ghgf += 1;
+					if (ghgf == 2) {
+						ghgf = 0;
+					}
+				}
+				var FSgf = "";
+				for (var trackID = 0; trackID < this.trackRender.length; trackID++) {
+					var tracksRender = this.trackRender[trackID];
+					var tracksQueue = this.mse.trackQueue[trackID].decodeNoteQueue;
+					if (tracksQueue.length > 0) {
+						tracksRender.indexRe = Math.max(0, Math.min((tracksQueue.length - 1), tracksRender.indexRe));
+						while (!(tracksRender.indexRe >= (tracksQueue.length - 1) || ((tracksQueue[tracksRender.indexRe][3] / 1000000) + (tracksQueue[tracksRender.indexRe][2] / 1000000)) > this.mse.getTime())) {
+							tracksRender.indexRe += 1;
+						}
+						while (!(tracksRender.indexRe <= 0 || ((tracksQueue[tracksRender.indexRe][3] / 1000000) + (tracksQueue[tracksRender.indexRe][2] / 1000000)) < this.mse.getTime())) {
+							tracksRender.indexRe -= 1;
+						}
+						for (var i = tracksRender.indexRe; i < tracksQueue.length; i++) {
+							var f = tracksQueue[i];
+							if (f) {
+								var TINEd = ((f[3] / 1000000) - this.mse.getTime());
+								var FSgf2 = 0;
+								var FSgf3 = 0;
+								var FSgf4 = 50;
+								FSgf2 = channelColor[f[5]];
+								if (f[0] == 0) {
+									FSgf3 = ((f[1] + 34) - 60);
+								} else {
+									FSgf3 = (f[1] - 60);
+								}
+								if (TINEd > (0 - (f[2] / 1000000)) && TINEd < 0) {
+									FSgf = FSgf2;
+									this.gd[Math.round(FSgf3 + 60)] = 1;
+									this.gd2[Math.round(FSgf3 + 60)] = FSgf2;
+									polyphon += 1;
+								} else {
+									FSgf = FSgf2;
+								}
+								var HSgg = 0;
+								if (Adfgdgfd[FSgf3 + 60] == "1") {
+									HSgg = 0.5;
+								} else {
+									HSgg = 1;
+								}
+								if (TINEd > 0 - (f[2] / 1000000)) {
+									this.Draw_rectangle((this.xpiano[FSgf3 + 60] - (this.xpos)) * (this.noteSize * 1), 20 + (((TINEd + (f[2] / 1000000) * 0.5) * this.displaySpeed * 1) - (360 / 2)), ((this.noteSize * HSgg) * 1), ((f[2] / 1000000) * this.displaySpeed * 1), FSgf);
+								}
+							}
+							if (10 + (TINEd * this.displaySpeed) > 360) break;
+						}
+					} else {
+						tracksRender.indexRe = 0;
+					}
+				}
+				for (var i = 0; i < 128; i++) {
+					if (Adfgdgfd[i] == '0') {
+						this.Draw_rectangle((this.xpiano[i] - this.xpos) * this.noteSize, (360 * -0.5) + (10 * 1), this.noteSize * 1, 20, this.gd[i] ? this.gd2[i] : Bfdg[Number(Adfgdgfd[i])]);		
+					}
+				}
+				for (var i = 0; i < 128; i++) {
+					if (Adfgdgfd[i] == '1') {
+						this.Draw_rectangle((this.xpiano[i] - (this.xpos)) * this.noteSize, (360 * -0.5) + (10 * 1) + 3, (this.noteSize * 0.5), (20 * 0.75), this.gd[i] ? this.gd2[i] : Bfdg[Number(Adfgdgfd[i])]);		
+					}
+				}
+				this.ctx.font = 15 + "px Arial";
+				this.ctx.fillStyle = "#fff";
+				this.ctx.fillText("Time: " + getDuraction(this.mse.getTime()) + " / " + getDuraction(this.mse.duration), 5, (15 * 1));
+				this.ctx.fillText("Notes: " + this.mse.getNoteTracker() + " / " + this.mse.getNoteLength(), 5, (30 * 1));
+				this.ctx.fillText("Polyphony: " + polyphon, 5, 45);
+				this.ctx.fillText("FPS: " + Math.round(1 / this.mse.DateTime), 5, 60);
+				this.ctx.font = 10 + "px Arial";
+				this.ctx.fillStyle = "#999";
+				this.ctx.fillText("Power by Anim Tred", 5, 360 - 25);
+				this.ctx.restore();
+			}
+			MidiRender.prototype.start = function (m) {
+				this.interval = setInterval(this.step.bind(this), 1000 / 60);
+			}
+			MidiRender.prototype.Draw_rectangle = function (gdx, gdy, gdw, gdh, color) {
+				this.ctx.fillStyle = color;
+				this.ctx.fillRect(((gdx - (gdw / 2)) + (640 / 2)), (((gdy * -1) - (gdh / 2)) + (360 / 2)), gdw, gdh);
+			}
+			var fddf = new MidiRender(MSE, document.getElementById('sce'));
+			var fgdgdfg = document.getElementById("yrtyryry");
+			var fgdgdfg2 = document.getElementById('vcbb');
+			var vcbb2 = document.getElementById('vcbb2');
+			var loadmidifile = document.getElementById('loadmidifile');
+			var midiplay = document.getElementById('midiplay');
+			var resss = document.getElementById('resss');
+			var gfhgfhgfhfghfh = 0;
+			function loadMidiVase(essf) {
+				MSE.loadMidi(songData[essf]);
+				MSE.loadSoundbank().then((e) => {
+					MSE.play();
+				})
+			}
+			resss.addEventListener('change', function() {
+				fddf.resize(+resss.value);
+			}, false);
+			fgdgdfg2.addEventListener('input', function() {
+				fddf.displaySpeed = Number(fgdgdfg2.value);
+			}, false);
+			vcbb2.addEventListener('input', function() {
+				MSE.node.gain.value = (vcbb2.value);
+			}, false);
+			fgdgdfg.addEventListener('input', function() {
+				MSE.muteMusicr = true;
+				MSE.setCurrentTime(MSE.duration * (fgdgdfg.value / 100000));
+			}, false);
+			setInterval(function() {
+				if (!MSE.muteMusicr) fgdgdfg.value = (MSE.getTime() / MSE.duration) * 100000;
+			}, 500);
+			function loadMidiFile(file) {
+				var a = new FileReader();
+				a.onload = (function() {
+					MSE.loadMid(a.result);
+					MSE.loadSoundbank().then((e) => {
+						MSE.play();
+					})
+				}).bind(this)
+				a.readAsArrayBuffer(file);
+			}
+			midiplay.onclick = function () {
+				if (MSE.isPaused) {
+					MSE.play();
+				} else {
+					MSE.pause();
+				}
+			}
+			loadmidifile.onclick = function () {
+				var sa = document.createElement('input');
+				sa.type = 'file';
+				sa.accept = '.mid';
+				sa.addEventListener('change', function (e) {
+					var file = e.target.files[0];
+					loadMidiFile(file);
+				}, false);
+				sa.click();
+			}
+		</script>
+	</body>
+</html>
