@@ -1,9 +1,9 @@
 /*
-Midi Sound Engine v2.2.10
+Midi Sound Engine v2.2.12
 
 my custom sound engine
 
-2023/02/02 Anim Tred
+2023/02/11 Anim Tred
 */
 
 var MidSE = (function(){
@@ -62,7 +62,7 @@ var MidSE = (function(){
 		"overdriven guitar": { releasePatch: 61, loop: true, loopStart: 2, loopEnd: 4, volume: 0.62 },
 		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.5]] },
 		"wooden flute": { releasePatch: 58, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.8], [72, 0.7]]},
-		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.72], [48, 0.62], [60, 0.52]] },
+		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.7], [48, 0.6], [60, 0.5]] },
 		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.54]] },
 		"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
 		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.52 },
@@ -621,52 +621,19 @@ var MidSE = (function(){
 		this.cleanProcessAllTracksDataIncludingTempoData(true);
 	}
 	MidiParser.prototype.ProcessTrackNumber = function(trackNumber) {
-		//Set a default tempo of 120 bpm
+		// Set a default tempo of 120 bpm
 		this.tempo = (500000 / this.timeDivision);
 		this.index = this.tracks[trackNumber][0];
 		this.chuckSize = this.tracks[trackNumber][1];
 		this.dataLength = this.index + this.chuckSize;
 		this.pulseCounter = 0;
-		this.eventType = '';
 		while (this.index < this.dataLength) {
 			this.pulseCounter += this.ReadVariableLength();
 			this.ReadMidiEvent();
-			if (this.eventType == 1) {
-				this.ProcessMidiControlEvent();
-			} else {
-				if (this.eventType == 3) {
-					this.ProcessMetaEvent();
-				} else {
-					if (this.eventType == 2) {
-						this.ProcessSystemExclusiveEvent();
-					} else {
-						// This is probably a non-standard meta event or similar
-					}
-				}
-			}
 		}
 		if (this.index !== this.dataLength) {
 			throw new Error("Track number " + (this.trackNumber + 1) + " has overrun - invalid MIDI file");
 		}
-	}
-	MidiParser.prototype.ProcessMidiControlEvent = function() {
-		if (this.eventTypeValue == 8) {
-			this.NoteOff();
-		}
-		if (this.eventTypeValue == 9) {
-			if (this.parameter2 > 0) {
-				this.NoteOn();
-			} else {
-				this.NoteOff();
-			}
-		}
-		if (this.eventTypeValue == 12) {
-			this.SetInstrument();
-		}
-		// Ignored MIDI Channel Voice Messages are -
-		// 10: Poly key pressure
-		// 11: Controller change
-		// 13: Channel pressure / Pitch bend
 	}
 	MidiParser.prototype.NoteOff = function() {
 		for (var i = this.newList.pitch.length - 1; i >= 0; i--) {
@@ -694,45 +661,10 @@ var MidSE = (function(){
 		this.newList.volume.push(Math.round((((this.parameter2 - 1) * 100) / 127)));
 		this.newList.noteOn.push(true);
 	}
-	MidiParser.prototype.SetInstrument = function() {
-		this.instrumentName = this.parameter1;
-	}
-	MidiParser.prototype.ProcessMetaEvent = function() {
-		if (this.command == 47) {
-			// This is the end-of-track meta command so force the pointer to the end of the chunk to exit gracefully
-			this.index = this.dataLength;
-		}
-		if (this.command == 81) {
-			this.SetTempo();
-		}
-		// Most meta events are ignored. These are -
-		// 0: Sequence number
-		// 1: Text event
-		// 2: Copyright notice
-		// 3: Sequence/Track name
-		// 4: Instrument name
-		// 5: Lyric
-		// 6: Marker
-		// 7: Cue point
-		// 32: MIDI Channel prefix
-		// 84: SMTPE offset
-		// 88: Time signature
-		// 89: Key signature
-		// 127: Sequencer-specific meta-event
-	}
-	MidiParser.prototype.SetTempo = function() {
-		this.newList.tempoTick.push(this.pulseCounter);
-		this.newList.tempoSetting.push((this.parameter1 / this.timeDivision));
-	}
-	MidiParser.prototype.ProcessSystemExclusiveEvent = function() {
-		// All system exclusive events are ignored. These are -
-		// 240: F0 Sysex event
-		// 247: F7 Sysex event
-	}
 	MidiParser.prototype.convertToNoteBlocks = function() {
 		// This block simply scans through all of the note and tempo information that we've recorded
 		// calculating the actual note lengths (including if the tempo changes mid-note)
-		// and inserts the start-tick, pitch, duration, volume, instrument, channel and track
+		// and inserts the start-tick, pitch, duration, volume, instrument, channel
 		// for each note at the correct position in the lists
 		var totalPulses = this.pulseCounter;
 		this.pulseCounter = 0;
@@ -813,16 +745,12 @@ var MidSE = (function(){
 	MidiParser.prototype.ReadMidiEvent = function() {
 		var fd = this.ReadUnsignedByte();
 		if (fd == 255) {
-			this.eventType = 3;
-			this.command = this.ReadUnsignedByte();
 			this.ParseMetaData();
 		} else {
 			if (fd > 239) {
-				this.eventType = 2;
 				this.ParseSystemEvent();
 			} else {
 				if (fd > 127) {
-					this.eventType = 1;
 					this.midiChannel = fd % 16;
 					this.eventTypeValue = ((fd - this.midiChannel) / 16);
 					this.ParseMidi();
@@ -836,35 +764,73 @@ var MidSE = (function(){
 	}
 	MidiParser.prototype.ParseMidi = function() {
 		this.parameter1 = this.ReadUnsignedByte();
-		if (this.eventTypeValue == 12 || this.eventTypeValue == 13) {
-			// "Program change" and "Channel pressure" don't take an extra parameter
-			return;
+		// "Program change" and "Channel pressure" don't take an extra parameter
+		if (!(this.eventTypeValue == 12 || this.eventTypeValue == 13)) {
+			this.parameter2 = this.ReadUnsignedByte();
 		}
-		this.parameter2 = this.ReadUnsignedByte();
+		switch (this.eventTypeValue) {
+			case 8:
+				this.NoteOff();
+				break;
+			case 9:
+				if (this.parameter2 > 0) {
+					this.NoteOn();
+				} else {
+					this.NoteOff();
+				}
+				break;
+			case 12:
+				this.instrumentName = this.parameter1;
+				break;
+		}
+		// Ignored MIDI Channel Voice Messages are -
+		// 10: Poly key pressure
+		// 11: Controller change
+		// 13: Channel pressure / Pitch bend
 	}
 	MidiParser.prototype.ParseSystemEvent = function() {
 		var temp = this.ReadVariableLength();
 		this.index += temp;
+		// All system exclusive events are ignored. These are -
+		// 240: F0 Sysex event
+		// 247: F7 Sysex event
 	}
 	MidiParser.prototype.ParseMetaData = function() {
-		if (this.command == 47) {
-			this.ReadVariableLength();
-			return;
+		var command = this.ReadUnsignedByte();
+		switch (command) {
+			case 47:
+				this.ReadVariableLength();
+				// This is the end-of-track meta command so force the pointer to the end of the chunk to exit gracefully
+				this.index = this.dataLength;
+				return;
+			case 81:
+				var value = this.ReadVariableLength();
+				this.newList.tempoTick.push(this.pulseCounter);
+				this.newList.tempoSetting.push((this.ReadBytes(value) / this.timeDivision));
+				return;
+			default:
+				// Most meta events are ignored. These are -
+				// 0: Sequence number
+				// 1: Text event
+				// 2: Copyright notice
+				// 3: Sequence/Track name
+				// 4: Instrument name
+				// 5: Lyric
+				// 6: Marker
+				// 7: Cue point
+				// 32: MIDI Channel prefix
+				// 84: SMTPE offset
+				// 88: Time signature
+				// 89: Key signature
+				// 127: Sequencer-specific meta-event
+				this.ReadBytes(this.ReadVariableLength());
 		}
-		if (this.command == 81) {
-			var value = this.ReadVariableLength();
-			this.parameter1 = this.ReadBytes(value);
-			return;
-		}
-		var count = this.ReadVariableLength();
-		this.ReadBytes(count);
-		this.eventType = undefined;
 	}
 	MidiParser.prototype.ReadUnsignedLong = function() {
 		return this.ReadBytes(4);
 	}
 	MidiParser.prototype.ReadUnsignedByte = function() {
-		return this.ReadBytes(1);
+		return this.data[this.index++];
 	}
 	MidiParser.prototype.ReadUnsignedShort = function() {
 		return this.ReadBytes(2);
@@ -872,7 +838,7 @@ var MidSE = (function(){
 	MidiParser.prototype.ReadVariableLength = function() {
 		var value = 0;
 		while (true) {
-			if (this.index >= this.dataLength) {
+			if (!(this.index < this.dataLength)) {
 				throw new Error("Unexpected end of input");
 			}
 			var temp = this.data[this.index];
@@ -886,7 +852,7 @@ var MidSE = (function(){
 	MidiParser.prototype.ReadBytes = function(byteCount) {
 		var d = 0;
 		for (var i = 0; i < byteCount; i++) {
-			if (this.index >= this.dataLength) {
+			if (!(this.index < this.dataLength)) {
 				throw new Error("Unexpected end of input");
 			}
 			d = ((d * 256) + this.data[this.index]);
@@ -964,8 +930,8 @@ var MidSE = (function(){
 		this.step = this.step.bind(this);
 		this.duration = 0;
 		this.muteMusicr = false;
-		this.frameStart = 0;
 		this.DateTime = 0;
+		this.frameStart = 0;
 		this.onplaynote = null;
 		this.onended = null;
 		this.onprogress = null;
@@ -1016,7 +982,7 @@ var MidSE = (function(){
 	MidiSoundEngine.prototype.setCurrentTime = function(s) {
 		this.muteMusicr = true;
 		this.MidiTimer = s;
-		this.setStartTime(s);
+		this.setStartTime(this.MidiTimer);
 		if (this.MidiTimer <= 0) {
 			this.MidiTimer = 0;
 			this.resetNoteTracker();
@@ -1029,7 +995,11 @@ var MidSE = (function(){
 		this.stopAllPlaying();
 	}
 	MidiSoundEngine.prototype.setStartTime = function(s) {
-		this.startTime = (Date.now() - (s * 1000));
+		this.startTime = (Date.now() - ((s / this.speed) * 1000));
+	}
+	MidiSoundEngine.prototype.setSpeed = function(s) {
+		this.speed = s;
+		this.setStartTime(this.MidiTimer);
 	}
 	MidiSoundEngine.prototype.loadSoundbank = function() {
 		var _this = this;
@@ -1203,6 +1173,7 @@ var MidSE = (function(){
 	}
 	MidiSoundEngine.prototype.step = function() {
 		var newList = [];
+		this.DateTime = (Date.now() - this.frameStart) / 1000;
         for (let i = this.notesPlaying.length; i--;) {
         	var n = this.notesPlaying[i];
 			if (!n.ended) {
@@ -1214,7 +1185,6 @@ var MidSE = (function(){
 			}
 		}
 		this.notesPlaying = newList;
-		this.DateTime = (Date.now() - this.frameStart) / 1000;
 		if (this.MidiTimer > this.duration && !this.isPaused) {
 			this.MidiTimer = this.duration;
 			this.setStartTime(this.duration);
@@ -1222,12 +1192,12 @@ var MidSE = (function(){
 			this.isPaused = true;
 		}
 		if (!this.isPaused && !this.muteMusicr) {
-			this.MidiTimer = (Date.now() - this.startTime) / 1000;
+			this.MidiTimer = ((Date.now() - this.startTime) * this.speed) / 1000;
 		}
 		function GS(f, s) {
 			for (var i6 = 0; i6 < f.length; i6++) {
 				if (f[i6].type == 'note' && s.type == 'note') {
-					if ((MIDI_INSTRUMENT[f[i6].instrument - 1] === MIDI_INSTRUMENT[s.instrument - 1] && f[i6].pitch === s.pitch)) {
+					if (MIDI_INSTRUMENT[f[i6].instrument - 1] == MIDI_INSTRUMENT[s.instrument - 1] && f[i6].pitch == s.pitch && f[i6].times == s.times) {
 						return false;
 					}
 				} else if (f[i6].type == 'drum' && s.type == 'drum') {
@@ -1335,6 +1305,7 @@ var MidSE = (function(){
 	}
 	MidiSoundEngine.prototype.loadMid = function(data) {
 		this.stop();
+		this.cleanup();
 		var loader = new MidiParser(data);
 		var gf_h = Date.now();
 		var result = loader.load();
