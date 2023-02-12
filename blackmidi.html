@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Black Midi - Midi Sound Engine</title>
+		<title>Midi Sound Engine</title>
 		<style type="text/css">
 			body{
 				overflow: hidden;
@@ -11,6 +11,12 @@
 				width: 100%;
 				height: 100%;
 				margin: 0;
+				color: #fff;
+			}
+			.dfgdg2{
+				background: #000;
+				width: 100%;
+				height: 100%;
 				color: #fff;
 			}
 			.dfgdg{
@@ -25,28 +31,31 @@
 			}
 		</style>
 	</head>
-	<body>
-		<div class="dfgdg">
-			<div class="contrs">
-				<button id="loadmidifile">Load Mid</button>
-				<button id="midiplay">Play/Pause</button>
-				<input type="range" name="" value="0" min="0" max="100000" id="yrtyryry" style="width: 72%;">
-				<br>
-				<label>Display Speed: </label>
-				<input type="range" name="" value="100" min="50" max="3000" id="vcbb" style="width: 35%;">
-				<label>Volume: </label>
-				<input type="range" name="" value="1" min="0" max="1" step="0.01" id="vcbb2" style="width: 15%;">
-				<label>Resize:</label>
-				<select id="resss">
-					<option value="1">640x360</option>
-					<option value="2">1280x720</option>
-				</select>
+	<body id="drop_zone">
+		<div class="dfgdg2" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+			<div class="dfgdg">
+				<div class="contrs">
+					<button id="loadmidifile">Load Mid</button>
+					<button id="midiplay">Play/Pause</button>
+					<input type="range" name="" value="0" min="0" max="100000" id="yrtyryry" style="width: 72%;">
+					<br>
+					<label>Display Speed: </label>
+					<input type="range" name="" value="100" min="100" max="2500" id="vcbb" style="width: 35%;">
+					<label>Volume: </label>
+					<input type="range" name="" value="1" min="0" max="1" step="0.01" id="vcbb2" style="width: 15%;">
+					<label>Resize:</label>
+					<select id="resss">
+						<option value="1">640x360</option>
+						<option value="0.5">360x180</option>
+						<option value="2">1280x720</option>
+					</select>
+				</div>
+				<canvas id="sce"></canvas>
 			</div>
-			<canvas id="sce"></canvas>
-		</div>
-		<div style="position: absolute; bottom: 0%; left: 50%; transform: translate(-50%, 0%); padding: 8px;">
-			<a href="./">Midi Visualisation</a>
-			<a>Black Midi</a>
+			<div style="position: absolute; bottom: 0%; left: 50%; transform: translate(-50%, 0%); padding: 8px;">
+				<a href="./">Midi Visualisation</a>
+				<a>Black Midi</a>
+			</div>
 		</div>
 		<script type="text/javascript" src="midi.js"></script>
 		<script type="text/javascript">
@@ -91,22 +100,22 @@
 			window.MSE = MSE;
 			var Adfgdgfd = "01010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010101001010010";
 			var channelColor = [
-				"#6b1e6b", // 0
-				"#f1a450", // 1
-				"#32c914", // 2
-				"#505050", // 3
-				"#7f43ff", // 4
-				"#f17fc8", // 5
-				"#aad4aa", // 6
-				"#667f25", // 7
-				"#f1c914", // 8
-				"#6bf1e7", // 9
-				"#ca327f", // 10
-				"#0084ff", // 11
-				"#decaaa", // 12
-				"#cdf100", // 13
-				"#f14639", // 14
-				"#327f7f", // 15
+				"#2f5fed", // 0
+				"#ed752f", // 1
+				"#2fed5f", // 2
+				"#ed2f78", // 3
+				"#31f7f7", // 4
+				"#dd31f7", // 5
+				"#94f731", // 6
+				"#4931f7", // 7
+				"#f7c631", // 8
+				"#31aef7", // 9
+				"#f73131", // 10
+				"#31f7ab", // 11
+				"#f731c6", // 12
+				"#4cf731", // 13
+				"#9431f7", // 14
+				"#2f5fed", // 15
 			];
 			var Bfdg = [
 				"#fff",
@@ -131,6 +140,9 @@
 						this.xpiano.push(g);
 					}
 				}
+				this.onprogress = this.onprogress.bind(this);
+				this.mse.onprogress = this.onprogress;
+	            this.textprogress = "";
 				this.channelCOLOR = 80;
 				this.channelMINE = 0;
 				this.indexRe = 0;
@@ -150,6 +162,9 @@
 				this.scale = s;
 				this.canvas.width = 640 * this.scale;
 				this.canvas.height = 360 * this.scale;
+			}
+			MidiRender.prototype.onprogress = function (e) {
+				this.textprogress = e;
 			}
 			MidiRender.prototype.onload = function () {
 				this.trackRender = [];
@@ -213,11 +228,7 @@
 								var FSgf3 = 0;
 								var FSgf4 = 50;
 								FSgf2 = channelColor[f[5]];
-								if (f[0] == 0) {
-									FSgf3 = ((f[1] + 34) - 60);
-								} else {
-									FSgf3 = (f[1] - 60);
-								}
+								FSgf3 = (f[1] - 60);
 								if (TINEd > (0 - (f[2] / 1000000)) && TINEd < 0) {
 									FSgf = FSgf2;
 									this.gd[Math.round(FSgf3 + 60)] = 1;
@@ -252,15 +263,21 @@
 						this.Draw_rectangle((this.xpiano[i] - (this.xpos)) * this.noteSize, (360 * -0.5) + (10 * 1) + 3, (this.noteSize * 0.5), (20 * 0.75), this.gd[i] ? this.gd2[i] : Bfdg[Number(Adfgdgfd[i])]);		
 					}
 				}
-				this.ctx.font = 15 + "px Arial";
+				this.ctx.font = "15px Arial";
+				this.ctx.textAlign = "left";
 				this.ctx.fillStyle = "#fff";
 				this.ctx.fillText("Time: " + getDuraction(this.mse.getTime()) + " / " + getDuraction(this.mse.duration), 5, (15 * 1));
 				this.ctx.fillText("Notes: " + this.mse.getNoteTracker() + " / " + this.mse.getNoteLength(), 5, (30 * 1));
 				this.ctx.fillText("Polyphony: " + polyphon, 5, 45);
-				this.ctx.fillText("FPS: " + Math.round(1 / this.mse.DateTime), 5, 60);
+				this.ctx.fillText("Concurrency: " + this.mse.notesPlaying.length, 5, 60);
+				this.ctx.fillText("FPS: " + Math.round(1 / this.mse.DateTime), 5, 75);
 				this.ctx.font = 10 + "px Arial";
 				this.ctx.fillStyle = "#999";
 				this.ctx.fillText("Power by Anim Tred", 5, 360 - 25);
+				this.ctx.fillStyle = '#fff';
+				this.ctx.font = "14px Arial";
+				this.ctx.textAlign = "center";
+				this.ctx.fillText(this.textprogress, 360, 100);
 				this.ctx.restore();
 			}
 			MidiRender.prototype.start = function (m) {
@@ -299,7 +316,7 @@
 			}, false);
 			setInterval(function() {
 				if (!MSE.muteMusicr) fgdgdfg.value = (MSE.getTime() / MSE.duration) * 100000;
-			}, 500);
+			}, 200);
 			function loadMidiFile(file) {
 				var a = new FileReader();
 				a.onload = (function() {
@@ -309,6 +326,20 @@
 					})
 				}).bind(this)
 				a.readAsArrayBuffer(file);
+			}
+			function dropHandler(ev) {
+				ev.preventDefault();
+				if (ev.dataTransfer.items) {
+					[...ev.dataTransfer.items].forEach((item, i) => {
+					if (item.kind === 'file') {
+						const file = item.getAsFile();
+						loadMidiFile(file);
+					}
+					});
+				}
+			}
+			function dragOverHandler(ev) {
+				ev.preventDefault();
 			}
 			midiplay.onclick = function () {
 				if (MSE.isPaused) {
