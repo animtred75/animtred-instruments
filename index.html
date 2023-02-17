@@ -91,20 +91,16 @@
 		            this.onmousemove = this.onmousemove.bind(this);
 					this.mouseX = 0;
 					this.mouseY = 0;
+					this._counter = 0;
+					this._rotation = 0;
 					this.playNote = [];
 					this.mousePressed = false;
 		            this.mse.duration = 0;
-		            this.visualizer = new Array(32);
-		            this.visualizer2 = new Array(32);
 		            this.onplaynote = this.onplaynote.bind(this);
 		            this.mse.onplaynote = this.onplaynote;
 		            this.onprogress = this.onprogress.bind(this);
 					mse.onprogress = this.onprogress;
 		            this.textprogress = "";
-					for (var i = 0; i < 32; i++) {
-						this.visualizer[i] = 0;
-						this.visualizer2[i] = 0;
-					}
 					this.ontouchstart = this.ontouchstart.bind(this);
 					this.ontouchend = this.ontouchend.bind(this);
 					this.ontouchmove = this.ontouchmove.bind(this);
@@ -143,7 +139,33 @@
 		            this.textprogress = e;
 				}
 				onplaynote(e) {
-					if (e.type == 1) this.playNote.push(e);
+					if (this.playNote.length >= 1000) {
+						return;
+					}
+					if (e.type == 1) {
+						this.playNote.push({
+							pitch: 32 + ((e.pitch - 32) / 2),
+							volume: e.volume,
+							color: e.instrument,
+							duration: Math.max(0.3, e.dur),
+							d: Math.max(0.3, e.dur),
+							du: Math.max(0.3, e.dur),
+							de: 0,
+							c: this._counter,
+						});
+					} else {
+						this.playNote.push({
+							pitch: 50,
+							duration: 0.3,
+							d: 0.3,
+							color: e.drum,
+							volume: e.volume,
+							du: 0.3,
+							de: 0,
+							c: this._counter,
+						});
+					}
+					this._counter += 32;
 				}
 				playStop() {
 					this.playNote = [];
@@ -154,34 +176,40 @@
 					}
 				}
 				step() {
-					for (var i6 = 0; i6 < 32; i6++) {
-						this.visualizer[i6] = 0;
-					}
-					for (var i4 = 0; i4 < this.playNote.length; i4++) {
-						var s3 = this.playNote[i4];
-						if (!("starttime" in s3)) {
-							s3.starttime = this.mse.getTime();
-						}
-						if ((this.mse.getTime() - s3.starttime) >= s3.dur) {
-							s3.ter = true;
-						}
-						var s = Math.floor(((s3.pitch - 24) / 3));
-						if (s in this.visualizer) this.visualizer[s] += (s3.volume * 5);
-					}
 					var ds = [];
 					for (var i5 = 0; i5 < this.playNote.length; i5++) {
 						var s2 = this.playNote[i5];
-						if (!s2.ter) {
+						if (s2.duration > 0) {
 							ds.push(s2);
 						}
 					}
-					for (var i1 = 0; i1 < 32; i1++) {
-						this.visualizer2[i1] += ((this.visualizer[i1] - this.visualizer2[i1]) / 4);
-					}
+					this._rotation = this.mse.getTime() * 50;
 					this.playNote = ds;
 					cuer.innerHTML = getDuraction(this.mse.getTime()) + '/' + getDuraction(this.mse.duration);
 					var duH1 = (this.mse.getTime() / this.mse.duration);
 					this.ctx.clearRect(0, 0, 360, 210);
+					this.ctx.globalAlpha = 1;
+					this.ctx.save();
+					this.ctx.rect(10, 30, 340, 170);
+					this.ctx.clip();
+					for (var i2 = 0; i2 < this.playNote.length; i2++) {
+						var o = this.playNote[i2];
+						this.ctx.save();
+						var r = [0, 0];
+						r[0] = (Math.sin((o.c + this._rotation) * Math.PI / 180)) * ((20 + (o.d * 20)) * (o.volume * 1.5));
+						r[1] = (Math.cos((o.c + this._rotation) * Math.PI / 180)) * ((20 + (o.d * 20)) * (o.volume * 1.5));
+						o.d -= (0.4 / 60);
+						this.ctx.translate(180 + r[0], 115 + r[1]);
+						this.ctx.fillStyle = "hsl(" + (o.color * 15) + ", 100%, " + o.pitch + "%)"; 
+						this.ctx.globalAlpha = o.duration / o.du;
+						this.ctx.beginPath();
+						this.ctx.arc(0, 0, (o.duration * 25) * o.volume, 0, 2 * Math.PI);
+						this.ctx.fill();
+						this.ctx.restore();
+						o.duration -= (1 / 60);
+					}
+					this.ctx.globalAlpha = 1;
+					this.ctx.restore();
 					this.ctx.strokeStyle = "#555";
 					this.ctx.beginPath();
 					this.ctx.lineCap = "round";
@@ -211,12 +239,6 @@
 						this.ctx.lineTo(16 + (duH1 * (360 - 32)), 16);
 						this.ctx.stroke();
 					}
-					for (var i2 = 0; i2 < 32; i2++) {
-						this.ctx.fillStyle = "hsl(" + ((i2 / 32) * 400) + ", 100%, 50%)";
-						var o = this.visualizer2[i2] * 10;
-						if (o > 178) o = 178;
-						this.ctx.fillRect(8 + (i2 * 10.8), (210 - 8) - o, 10.8, o);
-					}
 					if (!(this.mousePressed == true)) {
 						this.isTimelineTime = false;
 					}
@@ -224,10 +246,6 @@
 						this.isTimelineTime = true;
 					}
 					if (this.isTimelineTime) {
-						for (var i3 = 0; i3 < 32; i3++) {
-							this.visualizer[i3] = 0;
-							this.visualizer2[i3] = 0;
-						}
 						this.playNote = [];
 						this.mse.setCurrentTime((((this.mouseX - 16) / (360 - 32)) * this.mse.duration));
 					}
