@@ -1,9 +1,9 @@
 /*
-Midi Sound Engine v2.2.12
+Midi Sound Engine
 
 my custom sound engine
 
-2023/02/11 Anim Tred
+2023/02/21 Anim Tred
 */
 
 var MidSE = (function(){
@@ -12,7 +12,7 @@ var MidSE = (function(){
 	var DRUMS = {
 		"snare drum": {},
 		"side stick": { volume: 0.7 },
-		"crash cymbal": {},
+		"crash cymbal": { volume: 0.85 },
 		"open hi hat": { volume: 0.5 },
 		"closed hi hat": { volume: 0.5 },
 		"low floor tom": {},
@@ -52,7 +52,7 @@ var MidSE = (function(){
 		"organ": { releaseTime: 0.12, volume: [[48, 0.72], [60, 0.66], [72, 0.58]], releasePatch: 52 },
 		"guitar": { releaseTime: 0.12, volume: 0.57 },
 		"electric guitar": { releaseTime: 0.12, releasePatch: 60, volume: 0.5 },
-		"bass": { releaseTime: 0.25, volume: [[36, 0.75], [48, 0.65]] },
+		"bass": { releaseTime: 0.25, volume: [[36, 0.78], [48, 0.65]] },
 		"pizzicato": { releaseTime: 0.25, volume: [[48, 0.5], [60, 0.42]], releasePatch: 47 },
 		"harmonica": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.5 },
 		"clarinet": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
@@ -65,7 +65,7 @@ var MidSE = (function(){
 		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.7], [48, 0.6], [60, 0.5]] },
 		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.54]] },
 		"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
-		"music box": { releaseTime: 0.5, releasePatch: 61, volume: 0.52 },
+		"music box": { releaseTime: 0.5, releasePatch: 60.75, volume: 0.52 },
 		"steel drum": { releaseTime: 0.2, releasePatch: 57.5, volume: 0.55 },
 		"marimba": { volume: 0.62 },
 		"synth lead": { releaseTime: 0.1, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.85], [60, 0.78], [72, 0.6]] },
@@ -88,7 +88,7 @@ var MidSE = (function(){
 		// drums
 		"snare drum": {
 			title: "Pinkie the Babysitter (Baby Cakes) | MLP: FiM [HD]",
-			file: "3ccb997345760c2e8fca680ec2b687b8.wav"
+			file: "f8e9a4862f16d6e0bb58e8595cd5a4ad.wav"
 		},
 		"side stick": {
 			title: "MLP: PONY LIFE CAPITULO 18 REACCIÓN! DERPYY!!",
@@ -96,7 +96,7 @@ var MidSE = (function(){
 		},
 		"crash cymbal": {
 			title: "Pinkie the Babysitter (Baby Cakes) | MLP: FiM [HD]",
-			file: "f9175143922762430d0e3dc670320019.wav"
+			file: "d2047cb8e805c3d127c469de2fc1d329.wav"
 		},
 		"open hi hat": {
 			title: "My little pony-season 8 episode 10:The Break Up Breakdown",
@@ -357,7 +357,7 @@ var MidSE = (function(){
 		},
 		"accordion": {
 			title: "Peppa Pig - Musical Instruments (full episode)",
-			file: "fe46c8a93d0e5582b73297defe513f1e.wav"
+			file: "74f59bcfa6e0200a09c21677d3b5715a.wav"
 		},
 		"gumshot": {
 			title: "[Midi Player Gumshot]",
@@ -551,6 +551,7 @@ var MidSE = (function(){
 			trackNumber: [],
 			volume: [],
 		}
+		this.channelInstrument = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		this.noteLength = 0;
 		this.tempoLength = 0;
 	}
@@ -623,6 +624,7 @@ var MidSE = (function(){
 	MidiParser.prototype.ProcessTrackNumber = function(trackNumber) {
 		// Set a default tempo of 120 bpm
 		this.tempo = (500000 / this.timeDivision);
+		this.instrumentName = 0;
 		this.index = this.tracks[trackNumber][0];
 		this.chuckSize = this.tracks[trackNumber][1];
 		this.dataLength = this.index + this.chuckSize;
@@ -655,7 +657,7 @@ var MidSE = (function(){
 			}
 			this.newList.instrument.push(null);
 		} else {
-			this.newList.instrument.push(this.instrumentName || 0);
+			this.newList.instrument.push(this.channelInstrument[this.midiChannel]);
 		}
 		this.newList.pitch.push(this.parameter1);
 		this.newList.volume.push(Math.round((((this.parameter2 - 1) * 100) / 127)));
@@ -780,8 +782,15 @@ var MidSE = (function(){
 				}
 				break;
 			case 12:
-				this.instrumentName = this.parameter1;
+				this.channelInstrument[this.midiChannel] = this.parameter1;
 				break;
+			case 10:
+			case 11:
+			case 13:
+			case 14:
+				break;
+			default:
+				console.log("unknowm event: " + this.eventTypeValue);
 		}
 		// Ignored MIDI Channel Voice Messages are -
 		// 10: Poly key pressure
@@ -799,14 +808,12 @@ var MidSE = (function(){
 		var command = this.ReadUnsignedByte();
 		switch (command) {
 			case 47:
-				this.ReadVariableLength();
 				// This is the end-of-track meta command so force the pointer to the end of the chunk to exit gracefully
 				this.index = this.dataLength;
 				return;
 			case 81:
-				var value = this.ReadVariableLength();
 				this.newList.tempoTick.push(this.pulseCounter);
-				this.newList.tempoSetting.push((this.ReadBytes(value) / this.timeDivision));
+				this.newList.tempoSetting.push((this.ReadBytes(this.ReadVariableLength()) / this.timeDivision));
 				return;
 			default:
 				// Most meta events are ignored. These are -
@@ -879,7 +886,7 @@ var MidSE = (function(){
 			kjjh.push(kjjh[0] % 16);
 			sp += kjjh[3];
 			if (kjjh[2] > 0) {
-				fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] / 1000, sp / 1000, kjjh[4]]);
+				fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] / 1000, sp / 1000, kjjh[4], kjjh[5]]);
 			}
 		}
 		return fdgdfg;
@@ -1196,14 +1203,18 @@ var MidSE = (function(){
 		}
 		function GS(f, s) {
 			for (var i6 = 0; i6 < f.length; i6++) {
-				if (f[i6].type == 'note' && s.type == 'note') {
-					if (MIDI_INSTRUMENT[f[i6].instrument - 1] == MIDI_INSTRUMENT[s.instrument - 1] && f[i6].pitch == s.pitch && f[i6].times == s.times) {
-						return false;
+				if (f[i6].dur > 0) {
+					if (f[i6].type == 'note' && s.type == 'note') {
+						if (MIDI_INSTRUMENT[f[i6].instrument - 1] == MIDI_INSTRUMENT[s.instrument - 1] && f[i6].pitch == s.pitch && f[i6].times == s.times) {
+							return false;
+						}
+					} else if (f[i6].type == 'drum' && s.type == 'drum') {
+						if (f[i6].drum == s.drum) {
+							return false;
+						}
 					}
-				} else if (f[i6].type == 'drum' && s.type == 'drum') {
-					if (f[i6].drum == s.drum) {
-						return false;
-					}
+				} else {
+					console.log(f[i6].dur);
 				}
 			}
 			return true;
@@ -1222,6 +1233,7 @@ var MidSE = (function(){
 								dur: n.duraction,
 								instrument: n.instrument,
 								volume: n.volume,
+								channel: n.channel,
 								type: 1
 							});
 						}
@@ -1232,6 +1244,7 @@ var MidSE = (function(){
 								pitch: n.pitch,
 								isOn: true,
 								volume: n.volume,
+								channel: n.channel,
 								track: this.trackQueue[i].trackNumber,
 								dur: n.duraction,
 							});
@@ -1243,6 +1256,7 @@ var MidSE = (function(){
 							this.onplaynote({
 								drum: n.drum,
 								volume: n.volume,
+								channel: n.channel,
 								type: 0
 							});
 						}
@@ -1252,6 +1266,7 @@ var MidSE = (function(){
 								drum: n.drum,
 								volume: n.volume,
 								isOn: true,
+								channel: n.channel,
 								track: this.trackQueue[i].trackNumber,
 								dur: n.duraction,
 							});
@@ -1262,8 +1277,10 @@ var MidSE = (function(){
 		}		
 		var playNoteFix = [];
 		for (var i = 0; i < playNote.length; i++) {
-			if (GS(playNoteFix, playNote[i])) {
-				playNoteFix.push(playNote[i]);
+			if (playNote[i].dur > 0) {
+				if (GS(playNoteFix, playNote[i])) {
+					playNoteFix.push(playNote[i]);
+				}
 			}
 		}
 		for (var i = 0; i < playNoteFix.length; i++) {
