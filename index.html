@@ -81,6 +81,24 @@
 			}
 			class MidiControls {
 				constructor(mse, canvas) {
+					this.channelColor = [
+						"#2f5fed", // 0
+						"#ed752f", // 1
+						"#2fed5f", // 2
+						"#ed2f78", // 3
+						"#31f7f7", // 4
+						"#dd31f7", // 5
+						"#94f731", // 6
+						"#4931f7", // 7
+						"#f7c631", // 8
+						"#31aef7", // 9
+						"#f73131", // 10
+						"#31f7ab", // 11
+						"#f731c6", // 12
+						"#4cf731", // 13
+						"#9431f7", // 14
+						"#e2fa32", // 15
+					];
 					this.mse = mse;
 					this.canvas = canvas;
 					this.ctx = this.canvas.getContext('2d');
@@ -146,22 +164,18 @@
 						this.playNote.push({
 							pitch: 32 + ((e.pitch - 32) / 2),
 							volume: e.volume,
-							color: e.instrument,
-							duration: Math.max(0.3, e.dur),
-							d: Math.max(0.3, e.dur),
-							du: Math.max(0.3, e.dur),
-							de: 0,
+							color: this.channelColor[e.channel],
+							d: Math.max(0.3, e.dur) * 30,
+							b: 0,
 							c: this._counter,
 						});
 					} else {
 						this.playNote.push({
 							pitch: 50,
-							duration: 0.3,
-							d: 0.3,
-							color: e.drum,
+							d: 10,
+							color: this.channelColor[e.channel],
 							volume: e.volume,
-							du: 0.3,
-							de: 0,
+							b: 0,
 							c: this._counter,
 						});
 					}
@@ -179,7 +193,7 @@
 					var ds = [];
 					for (var i5 = 0; i5 < this.playNote.length; i5++) {
 						var s2 = this.playNote[i5];
-						if (s2.duration > 0) {
+						if (s2.b < s2.d) {
 							ds.push(s2);
 						}
 					}
@@ -196,17 +210,18 @@
 						var o = this.playNote[i2];
 						this.ctx.save();
 						var r = [0, 0];
-						r[0] = (Math.sin((o.c + this._rotation) * Math.PI / 180)) * ((20 + (o.d * 20)) * (o.volume * 1.5));
-						r[1] = (Math.cos((o.c + this._rotation) * Math.PI / 180)) * ((20 + (o.d * 20)) * (o.volume * 1.5));
-						o.d -= (0.4 / 60);
+						var tdir = (o.c + (this._rotation * Math.sin((o.d * 4) * Math.PI / 180)));
+						var tradius = Math.min((o.d / 64) * (o.volume * 240), 100);
+						r[0] = (Math.sin(tdir * Math.PI / 180)) * tradius;
+						r[1] = (Math.cos(tdir * Math.PI / 180)) * tradius;
 						this.ctx.translate(180 + r[0], 115 + r[1]);
-						this.ctx.fillStyle = "hsl(" + (o.color * 15) + ", 100%, " + o.pitch + "%)"; 
-						this.ctx.globalAlpha = o.duration / o.du;
+						this.ctx.fillStyle = o.color;
+						this.ctx.globalAlpha = Math.min(((o.d - o.b) / o.d) * 2, 1);
 						this.ctx.beginPath();
-						this.ctx.arc(0, 0, (o.duration * 25) * o.volume, 0, 2 * Math.PI);
+						this.ctx.arc(0, 0, ((o.d / 80) * (o.volume * 120)) * ((o.d - o.b) / o.d), 0, 2 * Math.PI);
 						this.ctx.fill();
 						this.ctx.restore();
-						o.duration -= (1 / 60);
+						o.b += 0.5;
 					}
 					this.ctx.globalAlpha = 1;
 					this.ctx.restore();
