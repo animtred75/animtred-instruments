@@ -1,9 +1,9 @@
 /*
-Midi Sound Engine
+Midi Sound Engine v2.2.16
 
 my custom sound engine
 
-2023/02/21 Anim Tred
+2023/02/22 Anim Tred Studio, LLC
 */
 
 var MidSE = (function(){
@@ -52,7 +52,7 @@ var MidSE = (function(){
 		"organ": { releaseTime: 0.12, volume: [[48, 0.72], [60, 0.66], [72, 0.58]], releasePatch: 52 },
 		"guitar": { releaseTime: 0.12, volume: 0.57 },
 		"electric guitar": { releaseTime: 0.12, releasePatch: 60, volume: 0.5 },
-		"bass": { releaseTime: 0.25, volume: [[36, 0.78], [48, 0.65]] },
+		"bass": { releaseTime: 0.25, volume: [[36, 0.82], [48, 0.65]] },
 		"pizzicato": { releaseTime: 0.25, volume: [[48, 0.5], [60, 0.42]], releasePatch: 47 },
 		"harmonica": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.5 },
 		"clarinet": { loop: true, loopStart: 2, loopEnd: 25, volume: 0.6 },
@@ -60,9 +60,9 @@ var MidSE = (function(){
 		"violin": { releaseTime: 0.12, loop: true, loopStart: 2, loopEnd: 25, volume: 0.62 },
 		"violin_2": { releaseTime: 0.5, loop: true, loopStart: 2, loopEnd: 25, volume: 0.58 },
 		"overdriven guitar": { releasePatch: 61, loop: true, loopStart: 2, loopEnd: 4, volume: 0.62 },
-		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.5]] },
+		"flute": { loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.64], [72, 0.5]] },
 		"wooden flute": { releasePatch: 58, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.8], [72, 0.7]]},
-		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.7], [48, 0.6], [60, 0.5]] },
+		"bassoon": { loop: true, loopStart: 2, loopEnd: 25, volume: [[36, 0.68], [48, 0.6], [60, 0.48]] },
 		"choir": { releaseTime: 0.25, loop: true, loopStart: 2, loopEnd: 25, volume: [[60, 0.6], [72, 0.54]] },
 		"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
 		"music box": { releaseTime: 0.5, releasePatch: 60.75, volume: 0.52 },
@@ -77,7 +77,7 @@ var MidSE = (function(){
 		"melodic tom": { releaseTime: 0.25, releasePatch: 60 },
 		"church organ": { loop: true, releasePatch: 51, loopStart: 2, loopEnd: 5, volume: [[36, 1], [48, 0.9], [60, 0.8]] },
 		"trumpet": { volume: [[48, 0.75], [60, 0.63], [72, 0.56]], loop: true },
-		"trumbone": { volume: [[48, 0.6], [60, 0.5], [60, 0.43]], loop: true },
+		"trumbone": { releasePatch: 61, volume: [[48, 0.8], [60, 0.62], [72, 0.54]], loop: true },
 		"taiko drum": { releaseTime: 0.25, releasePatch: 62, volume: 0.8 },
 		"reverse cymbal": { volume: 0.55 },
 		"gumshot": { releaseTime: 1 },
@@ -345,7 +345,7 @@ var MidSE = (function(){
 		},
 		"trumbone": {
 			title: "My Little Pony: friendship is magic | Swarm of the Century | FULL EPISODE | MLP",
-			file: "08dc1297b19bd5cb42e27816513e994b.wav"
+			file: "badad0a3c04c9c1cbe8bbc864edab749.wav"
 		},
 		"taiko drum": {
 			title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
