@@ -1,5 +1,5 @@
 /*
-Midi Sound Engine v3.0.0
+Midi Sound Engine v3.0.2
 
 Tridashie Sound Engine?
 
@@ -7,7 +7,7 @@ my custom sound engine https://scratch.mit.edu/projects/561308953/
 
 My Soundbank 13 MB
 
-2023/03/06 Anim Tred Studio, LLC
+2023/03/08 Anim Tred Studio, LLC
 */
 (function(modules) {
 	var installedModules = {};
@@ -125,9 +125,9 @@ My Soundbank 13 MB
 			"overdriven guitar": { releasePatch: 61, loop: true, volume: 0.62 },
 			"flute": { loop: true, loopStart: 2, releasePatch: 63, loopEnd: 25, volume: [[60, 0.66], [72, 0.46]] },
 			"wooden flute": { releasePatch: 58, loop: true, volume: [[60, 0.8], [72, 0.7]]},
-			"bassoon": { loop: true,  volume: [[36, 0.68], [48, 0.6], [60, 0.48]] },
+			"bassoon": { loop: true,  volume: [[36, 0.68], [48, 0.6], [60, 0.48], [72, 0.42]] },
 			"choir": { releaseTime: 0.15, releasePatch: 55, loop: true, volume: [[60, 0.6], [72, 0.54]] },
-			"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.45], [72, 0.4]] },
+			"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.48], [72, 0.42]] },
 			"music box": { releaseTime: 0.5, releasePatch: 60.75, volume: 0.52 },
 			"steel drum": { releaseTime: 0.2, releasePatch: 57.5, volume: 0.55 },
 			"marimba": { releasePatch: 49, volume: 0.6 },
@@ -152,291 +152,363 @@ My Soundbank 13 MB
 			// drums
 			"snare drum": {
 				title: "Pinkie the Babysitter (Baby Cakes) | MLP: FiM [HD]",
+				source: "https://youtu.be/TJ6w9LRH7ts?t=60",
 				file: "f8e9a4862f16d6e0bb58e8595cd5a4ad.wav"
 			},
 			"side stick": {
 				title: "MLP: PONY LIFE CAPITULO 18 REACCIÓN! DERPYY!!",
+				source: null,
 				file: "06f1484566bb6149673c05ee9c14f5f6.wav"
 			},
 			"crash cymbal": {
 				title: "Pinkie the Babysitter (Baby Cakes) | MLP: FiM [HD]",
+				source: "https://youtu.be/TJ6w9LRH7ts?t=60",
 				file: "d2047cb8e805c3d127c469de2fc1d329.wav"
 			},
 			"open hi hat": {
 				title: "My little pony-season 8 episode 10:The Break Up Breakdown",
+				source: "https://youtu.be/S3sIFvA2b-U?t=398",
 				file: "46cbebfbac0b11dc76c2e738b78120e4.wav"
 			},
 			"closed hi hat": {
 				title: "My little pony-season 8 episode 10:The Break Up Breakdown",
+				source: "https://youtu.be/S3sIFvA2b-U?t=398",
 				file: "d7ada32c710b0a883266f4b94b1db43c.wav"
 			},
 			"low floor tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "4c76166ce0d9b4853e0715f107b01c28.wav"
 			},
 			"high floor tom":{
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "5266b9988ee896bc2bab9cd496c42a98.wav"
 			},
 			"low tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "8555d813e84048f781c4ff44c6430739.wav"
 			},
 			"low mid tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "3b3fced980db142e737e15321a7eb7ef.wav"
 			},
 			"hi mid tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "3e3c032e6bc334b7294310585f79662b.wav"
 			},
 			"high tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "f57d7b55ae028fb6691530bb3c54bdb2.wav"
 			},
 			"tambourine": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=51",
 				file: "4fbbc63e66e4fd7b8611c11343f91fd2.wav"
 			},
 			"hand": {
 				title: "When I'm Sweeping",
+				source: "https://youtu.be/u9l9F2H1yn0?t=16",
 				file: "8158cc2e2219fb6f7cbfdfd051a3ed72.wav"
 			},
 			"claves": {
 				title: "My little pony-season 8 episode 10:The Break Up Breakdown",
+				source: "https://youtu.be/S3sIFvA2b-U?t=22",
 				file: "ef64be4f8da4730868cc931f3a15656f.wav"
 			},
 			"wood": {
 				title: "Friendship is Randomly Musical 1",
+				source: "https://youtube.com/watch?v=nX1WTsUjCLM&t=67s",
 				file: "94bf611190e55266b6250b8bbc17ed24.wav"
 			},
 			"cowbell": {
 				title: "Chicken Little",
+				source: null,
 				file: "1760020eb37fe3709c40f60d2a8ef544.wav"
 			},
 			"triangle": {
 				title: "[Tridashie] Friendship is Randomly Musical 2 [REUPLOAD]",
+				source: "https://youtu.be/y7ho58raWac?t=30",
 				file: "0136ce7fbd955f39bb46de40e12be0bc.wav"
 			},
 			"bongo": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=30",
 				file: "336220063f686b0f245430f76cbceb4d.wav"
 			},
 			"conga": {
 				title: "My Little Pony Friendship is Magic season 2 episode 19 \"Putting Your Hoof Down\"",
+				source: "https://youtu.be/qjhL0p3dHwM?t=38",
 				file: "fd5036ce507cd959596e9770efe62415.wav"
 			},
 			"cabasa": {
 				title: "My little pony season 8 episode 4(Fake it 'Til you make it)",
+				source: "https://youtu.be/HGK7o5TVVF4?t=1300",
 				file: "8b5d05fd13d7e56d91a92690a45d03a2.wav"
 			},
 			"long guiro": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=63",
 				file: "601103abf81fc9385f36dd9b47c703ee.wav"
 			},
 			"vibraslap": {
 				title: "My little pony-season 8 episode 10:The Break Up Breakdown",
+				source: "https://youtu.be/S3sIFvA2b-U?t=22",
 				file: "3934ec317365ad390c5c87c633b189b0.wav"
 			},
 			"cuica": {
 				title: "Friendship is Randomly Musical 8",
+				source: "https://youtu.be/JQtbvAmwYVI?t=67",
 				file: "b1ebe9cbd60498d3c28ff97ffd26bcdb.wav"
 			},
 			"short whistle": {
 				title: "My Little Pony friendship is magic season 2 episode 7 \"May the Best Pet Win!\"",
+				source: "https://youtu.be/GpSNka9ft-w?t=425",
 				file: "66eeb991358947dc9354c4fe75254dca.wav"
 			},
 			"long whistle": {
 				title: "My Little Pony friendship is magic season 2 episode 7 \"May the Best Pet Win!\"",
+				source: "https://youtu.be/GpSNka9ft-w?t=425",
 				file: "545ba524892f481b16633483a19ca963.wav"
 			},
 			"short guiro": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=63",
 				file: "f7b53554ebdd758c615cdc574bad7ea5.wav"
 			},
 			"low wood": {
 				title: "Friendship is Randomly Musical 1",
+				source: "https://youtube.com/watch?v=nX1WTsUjCLM&t=67s",
 				file: "28050489c468fd887d1b45812d183bd3.wav"
 			},
 			"hi bongo": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=30",
 				file: "8bb317a1069d04e13c23af27f2fdb76c.wav"
 			},
 			"low cuica": {
 				title: "Friendship is Randomly Musical 8",
+				source: "https://youtu.be/JQtbvAmwYVI?t=67",
 				file: "2373fc1cf3ff5352b7ece3603999927a.wav"
 			},
 			"mute triangle": {
 				title: "[Tridashie] Friendship is Randomly Musical 2 [REUPLOAD]",
+				source: "https://youtu.be/y7ho58raWac?t=30",
 				file: "af2148dba23faab1dec7cdd31663e292.wav"
 			},
 			"high agogo": {
 				title: "My Little Pony: FIM Season 9 Episode 15 (2,4,6 Greaaat)",
+				source: "https://youtu.be/MluslXu-Pnk?t=937",
 				file: "14a03edc9dcaa6099e8def15bc187e10.wav"
 			},
 			"low agogo": {
 				title: "My Little Pony: FIM Season 9 Episode 15 (2,4,6 Greaaat)",
+				source: "https://youtu.be/MluslXu-Pnk?t=937",
 				file: "f0379c9ab60a09f8f7cccb1cc32ac378.wav"
 			},
 			"open conga": {
 				title: "Peppa Pig Makes Music Instrument with Marbles | Peppa Pig Official Family Kids Cartoon",
+				source: "https://youtu.be/eGb3Edtrm1s?t=64",
 				file: "41ff2db5a55a45496d63fb0dbdbedd7c.wav"
 			},
 			"mute conga": {
 				title: "Peppa Pig Makes Music Instrument with Marbles | Peppa Pig Official Family Kids Cartoon",
+				source: "https://youtu.be/eGb3Edtrm1s?t=64",
 				file: "66c02912796e3b9f56a6d60081b96931.wav"
 			},
 			"acoustic bass drum": {
 				title: "Friendship is Musical Compilation",
+				source: "https://youtu.be/7WFZEuvZG0s?t=83",
 				file: "a639a88d1c502adf8a3fd9889ee9ae77.wav"
 			},
 			// instruments 
 			"piano": {
 				title: "Friendship is Musical | Season 1 Episode 17-18",
+				source: "https://youtu.be/_CZQ6tfivVs?t=89",
 				file: "39237faddf2e6c7d3d8f6d39ae30d8e6.wav"
 			},
 			"electric piano": {
 				title: "My Little Pony: Friendship is Magic - Season 4 Episode 3",
+				source: "https://youtu.be/oqaH8rTKu8M?t=820",
 				file: "d07006b09cfbac92e3c5bef85ccd3d36.wav"
 			},
 			"organ": {
 				title: "My Little Pony : Friendship is Magic Season 1 Episode 22",
+				source: "https://youtu.be/csuoJQH6Axs?t=176",
 				file: "dc54c4335b9b365320ce2f0b5a3096ff.wav"
 			},
 			"guitar": {
 				title: "Bright Mac and Pear Butter's Love Story (The Perfect Pear) | MLP: FiM [HD]",
+				source: "https://youtu.be/Flv6_BrwPVU?t=193",
 				file: "0328765961864d1ff2bc8aa2003489b0.wav"
 			},
 			"electric guitar": {
 				title: "Friendship is Musical VGM #1",
+				source: "https://youtu.be/qqB2J3-rMIc?t=12",
 				file: "ace30ecd40b0ee7e7d77361e53e1f607.wav"
 			},
 			"bass": {
 				title: "Friendship is Musical Season 2 First Half",
+				source: "https://youtu.be/yqYQoVwFn4E?t=143",
 				file: "c87bdd77085d5ef9688a4c88b5317947.wav"
 			},
 			"pizzicato": {
 				title: "Friendship is Musical | Season 3",
+				source: "https://youtu.be/7WFZEuvZG0s?t=168",
 				file: "f527e3719ee8b7b64062e5f9a4b33169.wav"
 			},
 			"harmonica": {
 				title: "Crescend Cinnamon on Twitter: \"https://t.co/zNTcb7oUSz\" / Twitter",
+				source: "https://t.co/zNTcb7oUSz",
 				file: "c7b1809c6bb6b0cbf1928d796d1d5eea.wav"
 			},
 			"clarinet": {
 				title: "My Little Pony Friendship Is Magic Season 4 Episode 21 Testing, 1, 2, 3 HD",
+				source: "https://youtu.be/RGIFQn8rlXw?t=282",
 				file: "086fb0c3d8dfab35aaba3c8e1dfb05af.wav"
 			},
 			"saxophone": {
 				title: "My Little Pony Friendship is Magic season 2 episode 22 \"Hurricane Fluttershy\"",
+				source: "https://youtu.be/YK7vf0OkmRQ?t=953",
 				file: "aa878420c089b36eab7064b70ac27818.wav"
 			},
 			"violin": {
 				title: "Peppa Pig - Musical Instruments (full episode)",
+				source: "https://youtu.be/n4gsHAH_q6s?t=69",
 				file: "9f121cecc17a68610598587467cfc149.wav"
 			},
 			"violin_2": {
 				title: "Peppa Pig - Musical Instruments (full episode)",
+				source: "https://youtu.be/n4gsHAH_q6s?t=69",
 				file: "f20c97f5b8369555f1f78e6c2040a8d3.wav"
 			},
 			"overdriven guitar": {
 				title: "Friendship is Musical VGM #1",
+				source: "https://youtu.be/qqB2J3-rMIc?t=24",
 				file: "578d9cba77e8d6f578b31d5f4a31c151.wav"
 			},
 			"flute": {
 				title: "Friendship is Musical | Season 5 (First Half)",
+				source: "https://youtu.be/5pcCX7904d4?t=117",
 				file: "10e4407f269919a8da1b686ec71d7953.wav"
 			},
 			"wooden flute": {
 				title: "Peppa Pig Makes Music Instrument with Marbles | Peppa Pig Official Family Kids Cartoon",
+				source: "https://youtu.be/eGb3Edtrm1s?t=114",
 				file: "49589ee679b86fb05a411ebc302d407d.wav"
 			},
 			"bassoon": {
 				title: "Friendship is Randomly Musical 5",
+				source: "https://youtu.be/uoHPvvPGcAw?t=77",
 				file: "925bc0db0ad640181cbbd961c326d1fd.wav"
 			},
 			"choir": {
 				title: "Friendship is Musical | Season 1 Episode 21-22",
+				source: "https://youtu.be/UZRoOAzI3wo?t=1",
 				file: "43c9b3aafd224f62be45c990bef7896b.wav"
 			},
 			"vibraphone": {
 				title: "My Little Pony friendship is magic season 2 episode 10 \"Secret of My Excess\"",
-				file: "fd492367d767784ec6a0aba23bfbbb37.wav"
+				source: "https://youtu.be/m9xyYfih99Q?t=49",
+				file: "44c0ed2158bc9c7b9aa0b90db32ee980.wav"
 			},
 			"music box": {
 				title: "Friendship is Randomly Musical 3 [REUPLOAD]",
+				source: "https://youtu.be/rG5ukrHNqE4?t=14",
 				file: "e66135be886992bd1be58f1c6eefb8e2.wav"
 			},
 			"steel drum": {
 				title: "Friendship is Musical | Season 3",
+				source: "https://youtu.be/7WFZEuvZG0s?t=5",
 				file: "98fa3eefd30afd2377db250f33dffe5d.wav"
 			},
 			"marimba": {
 				title: "Friendship is Musical | Season 1 Episode 17-18",
+				source: "https://youtu.be/_CZQ6tfivVs?t=30",
 				file: "aa0531b278664dfdf9254f2f5676d0e4.wav"
 			},
 			"synth lead": {
 				title: "Friendship is Musical | Season 1 Episode 21-22",
+				source: "https://youtu.be/UZRoOAzI3wo?t=3",
 				file: "eef84ef4c9a76eb92218deee402a71aa.wav"
 			},
 			"synth pad": {
 				title: "Friendship is Musical | Season 1 Episode 13-14",
+				source: "https://youtu.be/QHOjFbbbrXQ?t=40",
 				file: "6dd9834236dfc66bea70e387c1481941.wav"
 			},
 			"timpani": {
 				title: "Peppa Pig - Musical Instruments (full episode)",
+				source: "https://youtu.be/n4gsHAH_q6s?t=114",
 				file: "c4bad1057968e352c835bd5c805f911c.wav"
 			},
 			"whistle": {
 				title: "Whistling Competition Between Peppa Pig and Suzy Sheep",
+				source: "https://youtu.be/9ptrXeS7CaE?t=4",
 				file: "1d83be8a2f77baae0f03277ea629ee93.wav"
 			},
 			"orchestra hit": {
 				title: "Friendship is Musical | Season 1 Episode 5-6",
+				source: "https://youtu.be/EXrDap-pIdk?t=109",
 				file: "5fa7509939b2908b5eadd34d4965f2b6.wav"
 			},
 			"melodic tom": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://m.youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "baa611917d9f86ec22b1240a0df9e509.wav"
 			},
 			"synth drum": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://m.youtube.com/watch?v=lzpUO8-Xowk&t=471s",
 				file: "3518b4b38e33fc590b0c6b149e913df4.wav"
 			},
 			"church organ": {
 				title: "My Little Pony: Friendship is Magic - Season 4 Episode 3",
+				source: "https://youtu.be/oqaH8rTKu8M?t=820",
 				file: "da06d731163ed46fafa290346096528b.wav"
 			},
 			"trumpet": {
 				title: "[1080p] My little Pony Friendship is Magic Season 6 Episode 14 The Cart Before the Ponies",
+				source: "https://youtu.be/8pKhEvZRW34?t=915",
 				file: "cdb4db94af354ae0f7d442c5b36f5b75.wav"
 			},
 			"trumbone": {
 				title: "My Little Pony: friendship is magic | Swarm of the Century | FULL EPISODE | MLP",
+				source: "https://youtu.be/ZEzgWjBMfzM?t=1290",
 				file: "badad0a3c04c9c1cbe8bbc864edab749.wav"
 			},
 			"taiko drum": {
 				title: "Daddy Pig Plays The Drums!  | @Peppa Pig - Official Channel",
+				source: "https://youtu.be/aHEhixFSt-0?t=53",
 				file: "52676535c7f309dbc4c771d733bbc0a4.wav"
 			},
 			"reverse cymbal": {
 				title: "MLP FIM: Season 8 Episode 26",
+				source: "https://youtu.be/u5Cbd92uQ80?t=850",
 				file: "551922398f65d32746585a34757a83bf.wav"
 			},
 			"accordion": {
 				title: "Peppa Pig - Musical Instruments (full episode)",
+				source: "https://youtu.be/n4gsHAH_q6s?t=131",
 				file: "f58883149c61023fb78e98e81aa5d023.wav"
 			},
 			"gumshot": {
 				title: "[Midi Player Gumshot]",
+				source: null,
 				file: "997b210b9cd72734b14e71d28c666894.wav"
 			},
 			"agogo": {
 				title: "My Little Pony: FIM Season 9 Episode 15 (2,4,6 Greaaat)",
+				source: "https://youtu.be/MluslXu-Pnk?t=937",
 				file: "196ddd23bcd309117e60626d3bcb17dd.wav"
 			},
 			"warm": {
 				title: "My Little Pony Season 5 Episode 9",
+				source: "https://youtu.be/lzpUO8-Xowk?t=750",
 				file: "15cdf2d6f901c0e27de298d845e4718d.wav"
 			},
 		}
@@ -580,7 +652,6 @@ My Soundbank 13 MB
 			this.data = new Uint8Array(data);
 			this.dataLength = this.data.length;
 			this.index = 0;
-			this.trackName = '';
 			this.tempo = 0;
 			this.chuckSize = 0;
 			this.duration = 0;
@@ -595,7 +666,6 @@ My Soundbank 13 MB
 				tempoTick: [],
 				tickOff: [],
 				tickOn: [],
-				trackNumber: [],
 				volume: [],
 			}
 			this.channelInstrument = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -614,18 +684,7 @@ My Soundbank 13 MB
 			this.noteLength = 0;
 			this.tempoLength = 0;
 		}
-		MidiParser.prototype.load = function() {
-			this.ReadHeader();
-			this.processAllTracks();
-			return {
-				"name": "Midi File",
-				"tracks": this.track,
-				"tempo": this.timeDivision,
-				"duration": this.duration,
-				"formatType": this.formatType
-			}
-		}
-		MidiParser.prototype.ReadHeader = function() {
+		MidiParser.prototype.parse = function() {
 			// After reading through the definitions of the three different MIDI formats a number of times I have come up with the following
 			// summations for the types -
 			// Type 0: Everything happens on Track 1 - any others tracks in a type 0 MIDI should incur an error
@@ -645,40 +704,48 @@ My Soundbank 13 MB
 			this.formatType = this.readUnsignedShort();
 			this.numberTracks = this.readUnsignedShort();
 			this.timeDivision = this.readUnsignedShort();
-		}
-		MidiParser.prototype.processAllTracks = function() {
 			this.track = [];
-			var trackNumber = 1;
-			while (!(trackNumber > this.numberTracks)) {
+			var trackNumber = 0;
+			var _readUnsignedLong = this.readUnsignedLong.bind(this);
+			var _readVariableLength = this.readVariableLength.bind(this);
+			var _readUnsignedByte = this.readUnsignedByte.bind(this);
+			var _readBytes = this.readBytes.bind(this);
+			var _NoteOff = this.NoteOff.bind(this);
+			var _NoteOn = this.NoteOn.bind(this);
+			var _Controller = this.Controller.bind(this);
+			var _PitchBend = this.PitchBend.bind(this);
+			var trackName = '';
+			while (trackNumber < this.numberTracks) {
 				this.dataLength = this.data.length;
-				var chuckId = this.readUnsignedLong();
+				var chuckId = _readUnsignedLong();
 				if (!(chuckId == 1297379947)) {
-					throw new Error("MTrk not found for track number " + trackNumber + " - invalid MIDI file");
+					throw new Error("MTrk not found for track number " + (trackNumber + 1) + " - invalid MIDI file");
 				}
-				this.cleanProcessAllTracksDataIncludingTempoData(((!(this.formatType == 1)) || trackNumber == 1));
-				this.trackNumber = trackNumber;
+				this.cleanProcessAllTracksDataIncludingTempoData(this.formatType !== 1 || trackNumber == 0);
 				this.instrumentName = 0;
-				this.chuckSize = this.readUnsignedLong();
+				this.chuckSize = _readUnsignedLong();
 				this.dataLength = this.index + this.chuckSize;
 				this.pulseCounter = 0;
+				var eventTypeValue = 0;
+				trackName = 'Untitle Track';
 				while (this.index < this.dataLength) {
-					this.pulseCounter += this.readVariableLength();
-					var value = this.readUnsignedByte();
+					this.pulseCounter += _readVariableLength();
+					var value = _readUnsignedByte();
 					if (value == 255) {
-						switch (this.readUnsignedByte()) {
+						switch (_readUnsignedByte()) {
 							case 47:
 								// This is the end-of-track meta command so force the pointer to the end of the chunk to exit gracefully
 								this.index = this.dataLength;
 								break;
 							case 81:
 								this.newList.tempoTick.push(this.pulseCounter);
-								this.newList.tempoSetting.push(Math.round(this.readBytes(this.readVariableLength()) / this.timeDivision));
+								this.newList.tempoSetting.push(Math.round(_readBytes(_readVariableLength()) / this.timeDivision));
 								break;
 							case 3:
-								var l = this.readVariableLength();
-								this.trackName = '';
+								var l = _readVariableLength();
+								trackName = '';
 								for (let i = 0; i < l; i++) {
-									this.trackName += String.fromCharCode(this.readUnsignedByte());
+									this.trackName += String.fromCharCode(_readUnsignedByte());
 								}
 								break;
 							default:
@@ -695,11 +762,11 @@ My Soundbank 13 MB
 								// 88: Time signature
 								// 89: Key signature
 								// 127: Sequencer-specific meta-event
-								this.readBytes(this.readVariableLength());
+								_readBytes(_readVariableLength());
 						}
 					} else {
 						if (value > 239) {
-							var temp = this.readVariableLength();
+							var temp = _readVariableLength();
 							this.index += temp;
 							// All system exclusive events are ignored. These are -
 							// 240: F0 Sysex event
@@ -707,35 +774,35 @@ My Soundbank 13 MB
 						} else {
 							if (value > 127) {
 								this.midiChannel = value % 16;
-								this.eventTypeValue = ((value - this.midiChannel) / 16);
+								eventTypeValue = ((value - this.midiChannel) / 16);
 							} else {
 								// TODO: Ought to check the previous command was a midi one in which case this is referred to as "running status"
 								this.index -= 1;
 							}
-							this.parameter1 = this.readUnsignedByte();
+							this.parameter1 = _readUnsignedByte();
 							// "Program change" and "Channel pressure" don't take an extra parameter
-							if (!(this.eventTypeValue == 12 || this.eventTypeValue == 13)) {
-								this.parameter2 = this.readUnsignedByte();
+							if (!(eventTypeValue == 12 || eventTypeValue == 13)) {
+								this.parameter2 = _readUnsignedByte();
 							}
-							switch (this.eventTypeValue) {
+							switch (eventTypeValue) {
 								case 8:
-									this.NoteOff();
+									_NoteOff();
 									break;
 								case 9:
 									if (this.parameter2 > 0) {
-										this.NoteOn();
+										_NoteOn();
 									} else {
-										this.NoteOff();
+										_NoteOff();
 									}
 									break;
 								case 11:
-									this.Controller();
+									_Controller();
 									break;
 								case 12:
 									this.channelInstrument[this.midiChannel] = this.parameter1;
 									break;
 								case 14:
-									this.PitchBend();
+									_PitchBend();
 									break;
 								case 10:
 								case 13:
@@ -744,13 +811,13 @@ My Soundbank 13 MB
 									// 13: Channel pressure
 									break;
 								default:
-									console.log("unknowm event: " + this.eventTypeValue);
+									console.log("unknowm event: " + eventTypeValue);
 							}
 						}
 					}
 				}
 				if (this.index !== this.dataLength) {
-					throw new Error("Track number " + this.trackNumber + " has overrun - invalid MIDI file");
+					throw new Error("Track number " + (trackNumber + 1) + " has overrun - invalid MIDI file");
 				}
 				this.noteLength = this.newList.tickOn.length;
 				this.tempoLength = this.newList.tempoTick.length;
@@ -758,10 +825,17 @@ My Soundbank 13 MB
 				// Set a default tempo of 120 bpm
 				this.tempo = (500000 / this.timeDivision);
 				this.convertToNoteBlocks();
-				this.track.push([trackNumber, this.trackName, this.finalList, this.finalPitchBends, this.finalControllers]);
+				this.track.push([trackNumber + 1, trackName, this.finalList, this.finalPitchBends, this.finalControllers]);
 				trackNumber += 1;
 			}
 			this.cleanProcessAllTracksDataIncludingTempoData(true);
+			return {
+				"name": "Midi File",
+				"tracks": this.track,
+				"tempo": this.timeDivision,
+				"duration": this.duration,
+				"formatType": this.formatType
+			}
 		}
 		MidiParser.prototype.NoteOff = function() {
 			var newListLength = this.newList.pitch.length - 1;
@@ -776,7 +850,6 @@ My Soundbank 13 MB
 		MidiParser.prototype.NoteOn = function() {
 			this.newList.tickOn.push(this.pulseCounter);
 			this.newList.tickOff.push(0);
-			this.newList.trackNumber.push(this.trackNumber);
 			this.newList.channel.push(this.midiChannel);
 			if (this.midiChannel == 9) {
 				if (this.parameter1 < 27 || this.parameter1 > 87) {
@@ -813,15 +886,16 @@ My Soundbank 13 MB
 			this.tempoIndex = 0;
 			this.targetIndex = 0;
 			this.currentPulseInSeconds = 0;
+			var _newList = this.newList;
 			while (!(this.pulseCounter > totalPulses)) {
 				// Skip to next tick of interest
 				var temp = totalPulses;
 				if (this.tempoIndex < this.tempoLength) {
-					temp = this.newList.tempoTick[this.tempoIndex];
+					temp = _newList.tempoTick[this.tempoIndex];
 				}
 				if (index < this.noteLength) {
-					if (this.newList.tickOn[index] < temp) {
-						temp = this.newList.tickOn[index];
+					if (_newList.tickOn[index] < temp) {
+						temp = _newList.tickOn[index];
 					}
 				}
 				if (temp == totalPulses) {
@@ -829,12 +903,17 @@ My Soundbank 13 MB
 				}
 				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
 				this.pulseCounter = temp;
-				while (this.newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = this.newList.tempoSetting[this.tempoIndex];
+				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
+					this.tempo = _newList.tempoSetting[this.tempoIndex];
 					this.tempoIndex += 1;
 				}
-				while (this.newList.tickOn[index] == this.pulseCounter) {
-					this.insertNoteCurrentlyAtIndex(index);
+				while (_newList.tickOn[index] == this.pulseCounter) {
+					var lengthInMilliseconds = (_newList.tickOff[index] - _newList.tickOn[index]) * this.tempo;
+					if (_newList.instrument[index] == null) {
+						this.finalList.push([0, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
+					} else {
+						this.finalList.push([_newList.instrument[index] + 1, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
+					}
 					index += 1;
 				}
 			}
@@ -846,7 +925,7 @@ My Soundbank 13 MB
 			while (!(this.pulseCounter > totalPulses)) {
 				var temp = totalPulses;
 				if (this.tempoIndex < this.tempoLength) {
-					temp = this.newList.tempoTick[this.tempoIndex];
+					temp = _newList.tempoTick[this.tempoIndex];
 				}
 				if (index < this.pitchBendLength) {
 					if (this.pitchBends.tickOn[index] < temp) {
@@ -858,8 +937,8 @@ My Soundbank 13 MB
 				}
 				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
 				this.pulseCounter = temp;
-				while (this.newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = this.newList.tempoSetting[this.tempoIndex];
+				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
+					this.tempo = _newList.tempoSetting[this.tempoIndex];
 					this.tempoIndex += 1;
 				}
 				while (this.pitchBends.tickOn[index] == this.pulseCounter) {
@@ -875,7 +954,7 @@ My Soundbank 13 MB
 			while (!(this.pulseCounter > totalPulses)) {
 				var temp = totalPulses;
 				if (this.tempoIndex < this.tempoLength) {
-					temp = this.newList.tempoTick[this.tempoIndex];
+					temp = _newList.tempoTick[this.tempoIndex];
 				}
 				if (index < this.controllers.tickOn.length) {
 					if (this.controllers.tickOn[index] < temp) {
@@ -887,8 +966,8 @@ My Soundbank 13 MB
 				}
 				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
 				this.pulseCounter = temp;
-				while (this.newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = this.newList.tempoSetting[this.tempoIndex];
+				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
+					this.tempo = _newList.tempoSetting[this.tempoIndex];
 					this.tempoIndex += 1;
 				}
 				while (this.controllers.tickOn[index] == this.pulseCounter) {
@@ -899,10 +978,10 @@ My Soundbank 13 MB
 			this.tempo = (500000 / this.timeDivision);
 			this.pulseCounter = 0;
 			this.currentPulseInSeconds = 0;
-			for (let i = 0; i < this.newList.tempoTick.length; i++) {
-				this.currentPulseInSeconds += (this.tempo * (this.newList.tempoTick[i] - this.pulseCounter));
-				this.pulseCounter = this.newList.tempoTick[i];
-				this.tempo = this.newList.tempoSetting[i];
+			for (let i = 0; i < _newList.tempoTick.length; i++) {
+				this.currentPulseInSeconds += (this.tempo * (_newList.tempoTick[i] - this.pulseCounter));
+				this.pulseCounter = _newList.tempoTick[i];
+				this.tempo = _newList.tempoSetting[i];
 				var value = this.currentPulseInSeconds;
 				if (value > this.duration) {
 					this.duration = value;
@@ -914,23 +993,13 @@ My Soundbank 13 MB
 				this.duration = value;
 			}
 		}
-		MidiParser.prototype.insertNoteCurrentlyAtIndex = function(index) {
-			var lengthInMilliseconds = (this.newList.tickOff[index] - this.newList.tickOn[index]) * this.tempo;
-			if (this.newList.instrument[index] == null) {
-				this.finalList.push([0, this.newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), this.newList.volume[index], this.newList.channel[index]]);
-			} else {
-				this.finalList.push([this.newList.instrument[index] + 1, this.newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), this.newList.volume[index], this.newList.channel[index]]);
-			}
-		}
 		MidiParser.prototype.cleanProcessAllTracksDataIncludingTempoData = function(includingTempo) {
-			this.trackName = 'Untitle Track';
 			this.newList.channel = [];
 			this.newList.instrument = [];
 			this.newList.noteOn = [];
 			this.newList.pitch = [];
 			this.newList.tickOff = [];
 			this.newList.tickOn = [];
-			this.newList.trackNumber = [];
 			this.newList.volume = [];
 			this.pitchBends.channel = [];
 			this.pitchBends.tickOn = [];
@@ -990,7 +1059,7 @@ My Soundbank 13 MB
 			this.data = data;
 			this.index = 5;
 		}
-		MidiParserBase64.prototype.load = function (e) {
+		MidiParserBase64.prototype.parse = function (e) {
 			var fdgdfg = [];
 			var fFS = this.ReadBase64(2);
 			this.index += fFS;
@@ -1004,7 +1073,7 @@ My Soundbank 13 MB
 				kjjh.push(this.ReadBase64(2));
 				kjjh.push(kjjh[0] % 16);
 				sp += kjjh[3];
-				if (kjjh[2] > 0) {
+				if ((kjjh[2] > 1) || (kjjh[0] == 0)) {
 					fdgdfg.push([kjjh[0], kjjh[1], kjjh[2] * 1000, sp * 1000, Math.round((kjjh[4] / 100) * 127), kjjh[5]]);
 				}
 			}
@@ -1035,7 +1104,9 @@ My Soundbank 13 MB
 				}
 				for (let index = 0; index < this.decodeControllers.length; index++) {
 					const _g = this.decodeControllers[index][2] + (128 * this.decodeControllers[index][1]);
-					this.decodeControllers[index].push(controllersLast[_g]);
+					if (this.decodeControllers[index][4] === undefined) {
+						this.decodeControllers[index].push(controllersLast[_g]);
+					}
 					controllersLast[_g] = index;
 				}
 			}
@@ -1048,7 +1119,9 @@ My Soundbank 13 MB
 				}
 				for (let index = 0; index < this.decodePitchBends.length; index++) {
 					const _g = this.decodePitchBends[index][1];
-					this.decodePitchBends[index].push(pitchBendsLast[_g]);
+					if (this.decodePitchBends[index][3] === undefined) {
+						this.decodePitchBends[index].push(pitchBendsLast[_g]);
+					}
 					pitchBendsLast[_g] = index;
 				}
 			} else {
@@ -1763,7 +1836,7 @@ My Soundbank 13 MB
 					var dfg = new MidiParserBase64(txt);
 					var d = {
 						name: "MIDI BASE64",
-						notes: dfg.load()
+						notes: dfg.parse()
 					}
 					return d;
 				} else {
@@ -1789,9 +1862,9 @@ My Soundbank 13 MB
 		MidiSoundEngine.prototype.loadMid = function(data) {
 			this.stop();
 			this.cleanup();
-			var loader = new MidiParser(data);
+			var parser = new MidiParser(data);
 			var gf_h = Date.now();
-			var result = loader.load();
+			var result = parser.parse();
 			this.loadedTime = Date.now() - gf_h;
 			this.loadMidi(result);
 		}
