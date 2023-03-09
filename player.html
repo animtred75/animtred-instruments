@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +32,7 @@
 	<body id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 		<div class="hfgfhh">
 			<div class="hfgfhh2">
-				<input type="range" name="" value="0" min="0" max="100000" id="yrtyryry" style="width: 355px;">
+				<input type="range" name="" value="0" min="0" max="100000" id="yrtyryry" style="width: 355px;" disabled>
 				<br>
 				<button id="loadmidifile">Load Mid</button>
 				<button id="playstop" disabled>Play</button>
@@ -105,10 +105,9 @@
 			fgdgdfg.addEventListener('input', function() {
 				MSE.setCurrentTime(MSE.duration * (fgdgdfg.value / 100000));
 			}, false);
-			MSE.oncleanup = function() {
-				fgdgdfg.value = 0;
+			MSE.onended = function () {
+				MSE.setCurrentTime(0);
 				playstop.innerHTML = 'Play';
-				playstop.setAttribute("disabled", true);
 			}
 			function loadMidiFile(file) {
 				var a = new FileReader();
@@ -116,13 +115,21 @@
 					if (z_dir2) {
 						clearInterval(z_dir2);
 					}
-					MSE.loadMid(a.result);
-					MSE.loadSoundbank().then(function(e) {
+					fgdgdfg.value = 0;
+					cuer.innerHTML = getDuraction(0) + "/" + getDuraction(0);
+					playstop.innerHTML = 'Play';
+					playstop.setAttribute("disabled", true);
+					fgdgdfg.setAttribute("disabled", true);
+					setTimeout(function () {
+						MSE.loadMid(a.result);
+						fgdgdfg.removeAttribute("disabled");
 						z_dir2 = setInterval(z_dir, 100);
-						playstop.removeAttribute("disabled");
-						playstop.innerHTML = 'Pause';
-						MSE.play();
-					})
+						MSE.loadSoundbank().then(function(e) {
+							playstop.removeAttribute("disabled");
+							playstop.innerHTML = 'Pause';
+							MSE.play();
+						});
+					}, 2);
 				}).bind(this);
 				a.readAsArrayBuffer(file);
 			}
