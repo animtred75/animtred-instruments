@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Midi Sound Engine</title>
+		<title>My Instruments</title>
 		<style type="text/css">
 			body {
+				margin: 0;
 				background: #000;
 				width: 100%;
 				height: 100%;
 				overflow: hidden;
+			}
+			.hfgfhh {
+				background-color: rgb(0, 0, 0);
+				width: 100%;
+				height: 100%;
+				position: absolute;
 			}
 			label {
 				color: #fff;
@@ -27,15 +34,18 @@
 		</style>
 	</head>
 	<body id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
-		<div id="playermidi">
-			<button id="loadmidifile">Load Mid</button>
-			<button id="playstop">Play/Pause</button>
-			<label id="cuer">0:00/0:00</label>
-			<canvas width="360" height="210" id="midiscene"></canvas>
-		</div>
-		<div style="position: absolute; bottom: 0%; left: 50%; transform: translate(-50%, 0%); padding: 8px; color: #fff;">
-			<a>Midi Visualisation</a>
-			<a href="blackmidi.html">Black Midi</a>
+		<div class="hfgfhh">
+			<div id="playermidi">
+				<button id="loadmidifile">Load Mid</button>
+				<button id="playstop">Play/Pause</button>
+				<label id="cuer">0:00/0:00</label>
+				<canvas width="360" height="210" id="midiscene"></canvas>
+			</div>
+			<div style="position: absolute; bottom: 0%; left: 50%; transform: translate(-50%, 0%); padding: 8px; color: #fff;">
+				<a>Midi Visualisation</a>
+				<a href="blackmidi.html">Black Midi</a>
+				<a href="player.html">Midi Player</a>
+			</div>
 		</div>
 		<script type="text/javascript" src="midi.js"></script>
 		<script type="text/javascript">
@@ -118,6 +128,7 @@
 		            this.mse.onplaynote = this.onplaynote;
 		            this.onprogress = this.onprogress.bind(this);
 					mse.onprogress = this.onprogress;
+					mse.onended = this.onended.bind(this);
 		            this.textprogress = "";
 					this.ontouchstart = this.ontouchstart.bind(this);
 					this.ontouchend = this.ontouchend.bind(this);
@@ -141,9 +152,12 @@
 						this.mouseY = y;
 					}
 				}
-				ontouchstart(e) {
+				ontouchstart() {
 					this.mousePressed = true;
 					this.touchVis = true;
+				}
+				onended() {
+					this.mse.setCurrentTime(0);
 				}
 				ontouchend(e) {
 					this.mousePressed = false;
@@ -211,14 +225,14 @@
 						this.ctx.save();
 						var r = [0, 0];
 						var tdir = (o.c + (this._rotation * Math.sin((o.d * 4) * Math.PI / 180)));
-						var tradius = Math.min((o.d / 64) * (o.volume * 240), 100);
+						var tradius = Math.min((o.d / 64) * (o.volume * 250), 100);
 						r[0] = (Math.sin(tdir * Math.PI / 180)) * tradius;
 						r[1] = (Math.cos(tdir * Math.PI / 180)) * tradius;
 						this.ctx.translate(180 + r[0], 115 + r[1]);
 						this.ctx.fillStyle = o.color;
 						this.ctx.globalAlpha = Math.min(((o.d - o.b) / o.d) * 2, 1);
 						this.ctx.beginPath();
-						this.ctx.arc(0, 0, ((o.d / 80) * (o.volume * 120)) * ((o.d - o.b) / o.d), 0, 2 * Math.PI);
+						this.ctx.arc(0, 0, ((o.d / 80) * (o.volume * 140)) * ((o.d - o.b) / o.d), 0, 2 * Math.PI);
 						this.ctx.fill();
 						this.ctx.restore();
 						o.b += 0.5;
@@ -280,6 +294,7 @@
 				}
 			}
 			var midcontrol = new MidiControls(MSE, document.getElementById('midiscene'));
+			MSE.setVolume(0.67);
 			function loadMidiFile(file) {
 				var a = new FileReader();
 				a.onload = (function() {
