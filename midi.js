@@ -1,5 +1,5 @@
 /*
-Midi Sound Engine v3.0.2
+Midi Sound Engine v3.0.4
 
 Tridashie Sound Engine?
 
@@ -7,7 +7,7 @@ my custom sound engine https://scratch.mit.edu/projects/561308953/
 
 My Soundbank 13 MB
 
-2023/03/08 Anim Tred Studio, LLC
+2023/03/10 Anim Tred Studio, LLC
 */
 (function(modules) {
 	var installedModules = {};
@@ -48,8 +48,8 @@ My Soundbank 13 MB
 		if (mode & 1) value = __webpack_require__(value);
 		if (mode & 8) return value;
 		if ((mode & 4) && typeof value === 'object' && value && value.__esModule) {
-            return value;
-        }
+			return value;
+		}
 		var ns = Object.create(null);
 		__webpack_require__.r(ns);
 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
@@ -58,16 +58,16 @@ My Soundbank 13 MB
 	};
 	__webpack_require__.n = function(module) {
 		var getter = module && module.__esModule ? function getDefault() {
-            return module['default'];
-        } : function getModuleExports() {
-            return module;
-        };
+			return module['default'];
+		} : function getModuleExports() {
+			return module;
+		};
 		__webpack_require__.d(getter, 'a', getter);
 		return getter;
 	};
 	__webpack_require__.o = function(object, property) {
-        return Object.prototype.hasOwnProperty.call(object, property);
-    };
+		return Object.prototype.hasOwnProperty.call(object, property);
+	};
 	__webpack_require__.p = "";
 	return __webpack_require__(__webpack_require__.s = './src/index.js');
 })({
@@ -652,7 +652,6 @@ My Soundbank 13 MB
 			this.data = new Uint8Array(data);
 			this.dataLength = this.data.length;
 			this.index = 0;
-			this.tempo = 0;
 			this.chuckSize = 0;
 			this.duration = 0;
 			this.finalList = [];
@@ -681,8 +680,6 @@ My Soundbank 13 MB
 				control: [],
 				value: []
 			};
-			this.noteLength = 0;
-			this.tempoLength = 0;
 		}
 		MidiParser.prototype.parse = function() {
 			// After reading through the definitions of the three different MIDI formats a number of times I have come up with the following
@@ -705,7 +702,7 @@ My Soundbank 13 MB
 			this.numberTracks = this.readUnsignedShort();
 			this.timeDivision = this.readUnsignedShort();
 			this.track = [];
-			var trackNumber = 0;
+			var trackID = 0;
 			var _readUnsignedLong = this.readUnsignedLong.bind(this);
 			var _readVariableLength = this.readVariableLength.bind(this);
 			var _readUnsignedByte = this.readUnsignedByte.bind(this);
@@ -715,14 +712,13 @@ My Soundbank 13 MB
 			var _Controller = this.Controller.bind(this);
 			var _PitchBend = this.PitchBend.bind(this);
 			var trackName = '';
-			while (trackNumber < this.numberTracks) {
+			while (trackID < this.numberTracks) {
 				this.dataLength = this.data.length;
 				var chuckId = _readUnsignedLong();
 				if (!(chuckId == 1297379947)) {
-					throw new Error("MTrk not found for track number " + (trackNumber + 1) + " - invalid MIDI file");
+					throw new Error("MTrk not found for track number " + (trackID + 1) + " - invalid MIDI file");
 				}
-				this.cleanProcessAllTracksDataIncludingTempoData(this.formatType !== 1 || trackNumber == 0);
-				this.instrumentName = 0;
+				this.cleanProcessAllTracksDataIncludingTempoData(this.formatType !== 1 || trackID == 0);
 				this.chuckSize = _readUnsignedLong();
 				this.dataLength = this.index + this.chuckSize;
 				this.pulseCounter = 0;
@@ -745,7 +741,7 @@ My Soundbank 13 MB
 								var l = _readVariableLength();
 								trackName = '';
 								for (let i = 0; i < l; i++) {
-									this.trackName += String.fromCharCode(_readUnsignedByte());
+									trackName += String.fromCharCode(_readUnsignedByte());
 								}
 								break;
 							default:
@@ -817,16 +813,11 @@ My Soundbank 13 MB
 					}
 				}
 				if (this.index !== this.dataLength) {
-					throw new Error("Track number " + (trackNumber + 1) + " has overrun - invalid MIDI file");
+					throw new Error("Track number " + (trackID + 1) + " has overrun - invalid MIDI file");
 				}
-				this.noteLength = this.newList.tickOn.length;
-				this.tempoLength = this.newList.tempoTick.length;
-				this.pitchBendLength = this.pitchBends.tickOn.length;
-				// Set a default tempo of 120 bpm
-				this.tempo = (500000 / this.timeDivision);
 				this.convertToNoteBlocks();
-				this.track.push([trackNumber + 1, trackName, this.finalList, this.finalPitchBends, this.finalControllers]);
-				trackNumber += 1;
+				this.track.push([trackID + 1, trackName, this.finalList, this.finalPitchBends, this.finalControllers]);
+				trackID += 1;
 			}
 			this.cleanProcessAllTracksDataIncludingTempoData(true);
 			return {
@@ -880,20 +871,26 @@ My Soundbank 13 MB
 			// calculating the actual note lengths (including if the tempo changes mid-note)
 			// and inserts the start-tick, pitch, duration, volume, instrument, channel
 			// for each note at the correct position in the lists
+			var _noteLength = this.newList.tickOn.length;
+			var _tempoLength = this.newList.tempoTick.length;
+			var _pitchBendLength = this.pitchBends.tickOn.length;
 			var totalPulses = this.pulseCounter;
-			this.pulseCounter = 0;
+			var _pulseCounter = 0;
 			var index = 0;
-			this.tempoIndex = 0;
-			this.targetIndex = 0;
-			this.currentPulseInSeconds = 0;
+			var tempoIndex = 0;
+			var currentPulseInSeconds = 0;
+			// Set a default tempo of 120 bpm
+			var tempo = (500000 / this.timeDivision);
 			var _newList = this.newList;
-			while (!(this.pulseCounter > totalPulses)) {
+			var _pitchBends = this.pitchBends;
+			var _controllers = this.controllers;
+			while (!(_pulseCounter > totalPulses)) {
 				// Skip to next tick of interest
 				var temp = totalPulses;
-				if (this.tempoIndex < this.tempoLength) {
-					temp = _newList.tempoTick[this.tempoIndex];
+				if (tempoIndex < _tempoLength) {
+					temp = _newList.tempoTick[tempoIndex];
 				}
-				if (index < this.noteLength) {
+				if (index < _noteLength) {
 					if (_newList.tickOn[index] < temp) {
 						temp = _newList.tickOn[index];
 					}
@@ -901,94 +898,94 @@ My Soundbank 13 MB
 				if (temp == totalPulses) {
 					break;
 				}
-				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
-				this.pulseCounter = temp;
-				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = _newList.tempoSetting[this.tempoIndex];
-					this.tempoIndex += 1;
+				currentPulseInSeconds += (tempo * (temp - _pulseCounter));
+				_pulseCounter = temp;
+				while (_newList.tempoTick[tempoIndex] == _pulseCounter) {
+					tempo = _newList.tempoSetting[tempoIndex];
+					tempoIndex += 1;
 				}
-				while (_newList.tickOn[index] == this.pulseCounter) {
-					var lengthInMilliseconds = (_newList.tickOff[index] - _newList.tickOn[index]) * this.tempo;
+				while (_newList.tickOn[index] == _pulseCounter) {
+					var lengthInMilliseconds = (_newList.tickOff[index] - _newList.tickOn[index]) * tempo;
 					if (_newList.instrument[index] == null) {
-						this.finalList.push([0, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
+						this.finalList.push([0, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
 					} else {
-						this.finalList.push([_newList.instrument[index] + 1, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(this.currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
+						this.finalList.push([_newList.instrument[index] + 1, _newList.pitch[index], Math.floor(lengthInMilliseconds), Math.floor(currentPulseInSeconds), _newList.volume[index], _newList.channel[index]]);
 					}
 					index += 1;
 				}
 			}
-			this.tempo = (500000 / this.timeDivision);
-			this.pulseCounter = 0;
+			tempo = (500000 / this.timeDivision);
+			_pulseCounter = 0;
 			var index = 0;
-			this.tempoIndex = 0;
-			this.currentPulseInSeconds = 0;
-			while (!(this.pulseCounter > totalPulses)) {
+			tempoIndex = 0;
+			currentPulseInSeconds = 0;
+			while (!(_pulseCounter > totalPulses)) {
 				var temp = totalPulses;
-				if (this.tempoIndex < this.tempoLength) {
-					temp = _newList.tempoTick[this.tempoIndex];
+				if (tempoIndex < _tempoLength) {
+					temp = _newList.tempoTick[tempoIndex];
 				}
-				if (index < this.pitchBendLength) {
-					if (this.pitchBends.tickOn[index] < temp) {
-						temp = this.pitchBends.tickOn[index];
+				if (index < _pitchBendLength) {
+					if (_pitchBends.tickOn[index] < temp) {
+						temp = _pitchBends.tickOn[index];
 					}
 				}
 				if (temp == totalPulses) {
 					break;
 				}
-				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
-				this.pulseCounter = temp;
-				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = _newList.tempoSetting[this.tempoIndex];
-					this.tempoIndex += 1;
+				currentPulseInSeconds += (tempo * (temp - _pulseCounter));
+				_pulseCounter = temp;
+				while (_newList.tempoTick[tempoIndex] == _pulseCounter) {
+					tempo = _newList.tempoSetting[tempoIndex];
+					tempoIndex += 1;
 				}
-				while (this.pitchBends.tickOn[index] == this.pulseCounter) {
-					this.finalPitchBends.push([this.currentPulseInSeconds, this.pitchBends.channel[index], this.pitchBends.pitch[index]]);
+				while (_pitchBends.tickOn[index] == _pulseCounter) {
+					this.finalPitchBends.push([currentPulseInSeconds, _pitchBends.channel[index], _pitchBends.pitch[index]]);
 					index += 1;
 				}
 			}
-			this.tempo = (500000 / this.timeDivision);
-			this.pulseCounter = 0;
+			tempo = (500000 / this.timeDivision);
+			_pulseCounter = 0;
 			var index = 0;
-			this.tempoIndex = 0;
-			this.currentPulseInSeconds = 0;
-			while (!(this.pulseCounter > totalPulses)) {
+			tempoIndex = 0;
+			currentPulseInSeconds = 0;
+			while (!(_pulseCounter > totalPulses)) {
 				var temp = totalPulses;
-				if (this.tempoIndex < this.tempoLength) {
-					temp = _newList.tempoTick[this.tempoIndex];
+				if (tempoIndex < _tempoLength) {
+					temp = _newList.tempoTick[tempoIndex];
 				}
-				if (index < this.controllers.tickOn.length) {
-					if (this.controllers.tickOn[index] < temp) {
-						temp = this.controllers.tickOn[index];
+				if (index < _controllers.tickOn.length) {
+					if (_controllers.tickOn[index] < temp) {
+						temp = _controllers.tickOn[index];
 					}
 				}
 				if (temp == totalPulses) {
 					break;
 				}
-				this.currentPulseInSeconds += (this.tempo * (temp - this.pulseCounter));
-				this.pulseCounter = temp;
-				while (_newList.tempoTick[this.tempoIndex] == this.pulseCounter) {
-					this.tempo = _newList.tempoSetting[this.tempoIndex];
-					this.tempoIndex += 1;
+				currentPulseInSeconds += (tempo * (temp - _pulseCounter));
+				_pulseCounter = temp;
+				while (_newList.tempoTick[tempoIndex] == _pulseCounter) {
+					tempo = _newList.tempoSetting[tempoIndex];
+					tempoIndex += 1;
 				}
-				while (this.controllers.tickOn[index] == this.pulseCounter) {
-					this.finalControllers.push([this.currentPulseInSeconds, this.controllers.channel[index], this.controllers.control[index], this.controllers.value[index]]);
+				while (_controllers.tickOn[index] == _pulseCounter) {
+					this.finalControllers.push([currentPulseInSeconds, _controllers.channel[index], _controllers.control[index], _controllers.value[index]]);
 					index += 1;
 				}
 			}
-			this.tempo = (500000 / this.timeDivision);
-			this.pulseCounter = 0;
-			this.currentPulseInSeconds = 0;
+			tempo = (500000 / this.timeDivision);
+			_pulseCounter = 0;
+			currentPulseInSeconds = 0;
 			for (let i = 0; i < _newList.tempoTick.length; i++) {
-				this.currentPulseInSeconds += (this.tempo * (_newList.tempoTick[i] - this.pulseCounter));
-				this.pulseCounter = _newList.tempoTick[i];
-				this.tempo = _newList.tempoSetting[i];
-				var value = this.currentPulseInSeconds;
+				currentPulseInSeconds += (tempo * (_newList.tempoTick[i] - _pulseCounter));
+				_pulseCounter = _newList.tempoTick[i];
+				tempo = _newList.tempoSetting[i];
+				var value = currentPulseInSeconds;
 				if (value > this.duration) {
 					this.duration = value;
 				}
 			}
-			this.currentPulseInSeconds += (this.tempo * (totalPulses - this.pulseCounter));
-			var value = this.currentPulseInSeconds;
+			currentPulseInSeconds += (tempo * (totalPulses - _pulseCounter));
+			var value = currentPulseInSeconds;
 			if (value > this.duration) {
 				this.duration = value;
 			}
@@ -1945,5 +1942,5 @@ My Soundbank 13 MB
 		exports.INSTRUMENT = INSTRUMENT;
 		exports.SOUNDBANK_INFOS = SOUNDBANK_INFOS;
 		window.MidSE = exports;
-    }
+	}
 });
