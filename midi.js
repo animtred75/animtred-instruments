@@ -1,5 +1,5 @@
 /*
-Midi Sound Engine v3.0.4
+Midi Sound Engine v3.0.6
 
 Tridashie Sound Engine?
 
@@ -7,7 +7,7 @@ my custom sound engine https://scratch.mit.edu/projects/561308953/
 
 My Soundbank 13 MB
 
-2023/03/10 Anim Tred Studio, LLC
+2023/03/11 Anim Tred Studio, LLC
 */
 (function(modules) {
 	var installedModules = {};
@@ -115,7 +115,7 @@ My Soundbank 13 MB
 			"organ": { releaseTime: 0.12, volume: [[48, 0.72], [60, 0.68], [72, 0.6]], releasePatch: 52 },
 			"guitar": { releaseTime: 0.15, volume: 0.57 },
 			"electric guitar": { releaseTime: 0.12, releasePatch: 60, volume: 0.5 },
-			"bass": { releaseTime: 0.25, releasePatch: 57, volume: [[36, 0.6], [48, 0.4]] },
+			"bass": { releaseTime: 0.25, releasePatch: 57, volume: [[36, 0.6], [48, 0.42]] },
 			"pizzicato": { releaseTime: 0.25, volume: [[48, 0.5], [60, 0.42]], releasePatch: 47 },
 			"harmonica": { loop: true, volume: 0.5 },
 			"clarinet": { loop: true, volume: 0.6 },
@@ -125,9 +125,9 @@ My Soundbank 13 MB
 			"overdriven guitar": { releasePatch: 61, loop: true, volume: 0.62 },
 			"flute": { loop: true, loopStart: 2, releasePatch: 63, loopEnd: 25, volume: [[60, 0.66], [72, 0.46]] },
 			"wooden flute": { releasePatch: 58, loop: true, volume: [[60, 0.8], [72, 0.7]]},
-			"bassoon": { loop: true,  volume: [[36, 0.68], [48, 0.6], [60, 0.48], [72, 0.42]] },
+			"bassoon": { loop: true, volume: [[36, 0.68], [48, 0.6], [60, 0.48], [72, 0.42]] },
 			"choir": { releaseTime: 0.15, releasePatch: 55, loop: true, volume: [[60, 0.6], [72, 0.54]] },
-			"vibraphone": { releaseTime: 0.2, releasePatch: 58, volume: [[60, 0.48], [72, 0.42]] },
+			"vibraphone": { releaseTime: 0.1, releasePatch: 58, volume: [[60, 0.5], [72, 0.45]] },
 			"music box": { releaseTime: 0.5, releasePatch: 60.75, volume: 0.52 },
 			"steel drum": { releaseTime: 0.2, releasePatch: 57.5, volume: 0.55 },
 			"marimba": { releasePatch: 49, volume: 0.6 },
@@ -414,7 +414,7 @@ My Soundbank 13 MB
 			"vibraphone": {
 				title: "My Little Pony friendship is magic season 2 episode 10 \"Secret of My Excess\"",
 				source: "https://youtu.be/m9xyYfih99Q?t=49",
-				file: "44c0ed2158bc9c7b9aa0b90db32ee980.wav"
+				file: "354604052268eeeb24b5cb6c6df3ba44.wav"
 			},
 			"music box": {
 				title: "Friendship is Randomly Musical 3 [REUPLOAD]",
